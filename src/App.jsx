@@ -1,7 +1,12 @@
-import { Button } from "./components/ui/button";
+import { MainLayout } from "./components/MainLayouts";
+import { HeaderWidget } from "./components/widgets";
 
 function App() {
-  return <div></div>;
+  return (
+    <MainLayout.NavAndFooter>
+      <HeaderWidget />
+    </MainLayout.NavAndFooter>
+  );
 }
 
 export default App;
