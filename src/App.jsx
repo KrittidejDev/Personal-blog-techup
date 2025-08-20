@@ -1,11 +1,11 @@
-import { MainLayout } from "./components/MainLayouts";
-import { HeaderWidget } from "./components/widgets";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes";
 
 function App() {
   return (
-    <MainLayout.NavAndFooter>
-      <HeaderWidget />
-    </MainLayout.NavAndFooter>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
 

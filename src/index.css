@@ -6,6 +6,8 @@
 body {
   width: 100dvw;
   min-height: 100dvh;
+  box-sizing: border-box;
+  overflow-x: hidden;
   font-family: "Poppins", sans-serif;
 }
 
@@ -96,6 +98,8 @@ body {
   --sidebar-ring: oklch(0.708 0 0);
   --shadow-bottom: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-top: 0 -4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 -2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .dark {
@@ -135,16 +139,21 @@ body {
 /* container */
 
 .container {
-  @apply w-full max-w-[1200px];
+  @apply w-full  max-w-[1200px] box-border;
 }
 
 .nav-bar-container {
-  @apply w-full flex justify-center md:px-6 md:py-3 px-8 py-4;
+  @apply m-0 w-full flex items-center justify-center md:px-6 md:py-3 px-8 py-4 bg-brown-8f6;
   box-shadow: var(--shadow-bottom);
 }
 
+.footer-container {
+  @apply m-0 w-full flex items-center justify-center md:px-6 md:py-[60px] px-8 py-10 bg-brown-eeb;
+  box-shadow: var(--shadow-top);
+}
+
 .nav-and-footer-container {
-  @apply w-full;
+  @apply min-h-dvh flex flex-col justify-between;
 }
 
 /* button theme */

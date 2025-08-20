@@ -1,9 +1,8 @@
 import React from "react";
-import { Button } from "../ui/button";
 
 const HeaderWidget = () => {
   return (
-    <div className="flex-center px-4 lg:px-0 md:px-10">
+    <div className="flex-center px-4 lg:px-4 md:px-10">
       <div className="container py-[60px] flex items-center justify-center gap-x-[60px] gap-y-10 flex-wrap">
         <div className="cal-3-card md:max-w-1">
           <h1 className="text-h2 md:text-h1 text-center lg:text-right mb-6">
@@ -14,8 +13,12 @@ const HeaderWidget = () => {
             Inspiration and Information.
           </p>
         </div>
-        <img src="/images/header-img-1.png" alt="" className="cal-3-card " />
-        <div className="cal-3-card">
+        <img
+          src="/images/header-img-1.png"
+          alt=""
+          className="cal-3-card md:max-w-1/3"
+        />
+        <div className="cal-3-card md:max-w-1/3">
           <div className="auther text-b3 text-brown-16b mb-1 ">-Author</div>
           <h3 className="title text-h3 mb-3">Krittidej J.</h3>
           <p className="text-b1 mb-4">
