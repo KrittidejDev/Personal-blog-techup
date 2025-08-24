@@ -1,5 +1,7 @@
 import React from "react";
-import { Icons } from "../Icons";
+import LinkInCircle from "../Icons/LinkInCircle";
+import GitCircle from "../Icons/GitCircle";
+import GoogleCircle from "../Icons/GoogleCircle";
 
 const FooterWidget = () => {
   return (
@@ -9,13 +11,13 @@ const FooterWidget = () => {
           <div className="">Get in touch</div>
           <div className="flex items-center gap-x-4">
             <a href="/">
-              <Icons.LinkInCircle />
+              <LinkInCircle />
             </a>
             <a href="/">
-              <Icons.GitCircle />
+              <GitCircle />
             </a>
             <a href="/">
-              <Icons.GoogleCircle />
+              <GoogleCircle />
             </a>
           </div>
         </div>

@@ -56,8 +56,8 @@ body {
   --color-brown-eeb: #efeeeb;
   --color-brown-8f6: #f9f8f6;
   --color-orange: #f2b68c;
-  --color-green: #12b279;
-  --color-sky: #d7f2e9;
+  --color-green-279: #12b279;
+  --color-green-2e9: #d7f2e9;
   --color-red: #eb5164;
   --color-black-text: #1a1a2c;
   /* color */
@@ -137,6 +137,9 @@ body {
 }
 
 /* container */
+.main-layout {
+  @apply w-dvw min-h-dvh flex flex-col items-center px-4 md:px-12;
+}
 
 .container {
   @apply w-full  max-w-[1200px] box-border;
@@ -156,6 +159,10 @@ body {
   @apply min-h-dvh flex flex-col justify-between;
 }
 
+.widget-container {
+  @apply flex items-center flex-col px-4 lg:px-4 md:px-10;
+}
+
 /* button theme */
 .btn-border-16b {
   @apply border z-50 text-brown-16b text-brown-31e rounded-full text-base px-10 py-3 bg-transparent hover:bg-brown-03b hover:text-white;
@@ -165,9 +172,8 @@ body {
   @apply border border-brown-31e bg-brown-31e text-white rounded-full text-base px-10 py-3 hover:bg-brown-03b;
 }
 
-/* flex center */
-.flex-center {
-  @apply flex justify-center;
+.filter-button {
+  @apply py-3 px-5 text-base font-medium text-brown-16b shadow-none bg-transparent rounded-[8px]  hover:bg-brown-6d1;
 }
 
 /* font format */
