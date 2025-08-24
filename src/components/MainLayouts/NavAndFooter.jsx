@@ -1,5 +1,6 @@
 import React from "react";
-import { FooterWidget, NavbarWidget } from "../widgets";
+import NavbarWidget from "../Widgets/NavbarWidget";
+import FooterWidget from "../Widgets/FooterWidget";
 
 const NavAndFooter = ({ children }) => {
   return (

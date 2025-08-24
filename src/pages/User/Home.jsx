@@ -1,14 +1,15 @@
-import { MainLayout } from "@/components/MainLayouts";
-import { HeaderWidget } from "@/components/widgets";
-import React from "react";
+import NavAndFooter from "@/components/MainLayouts/NavAndFooter";
+import BlogListWidget from "@/components/Widgets/BlogListWidget";
+import HeaderWidget from "@/components/Widgets/HeaderWidget";
 
 const Home = () => {
   return (
-    <MainLayout.NavAndFooter>
-      <div className="">
+    <NavAndFooter>
+      <div className="main-layout">
         <HeaderWidget />
+        <BlogListWidget />
       </div>
-    </MainLayout.NavAndFooter>
+    </NavAndFooter>
   );
 };
 
