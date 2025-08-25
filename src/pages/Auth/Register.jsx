@@ -1,7 +1,8 @@
+import NavAndFooter from "@/components/MainLayouts/NavAndFooter";
 import React from "react";
 
 const Register = () => {
-  return <div>Register</div>;
+  return <NavAndFooter>Register</NavAndFooter>;
 };
 
 export default Register;

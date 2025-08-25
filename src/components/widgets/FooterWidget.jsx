@@ -6,8 +6,8 @@ import GoogleCircle from "../Icons/GoogleCircle";
 const FooterWidget = () => {
   return (
     <div className="footer-container">
-      <div className="container  flex justify-between items-center">
-        <div className="f-left flex items-center gap-x-6">
+      <div className="container flex flex-wrap justify-between items-center gap-y-6 box-border ">
+        <div className=" flex flex-1 sm:justify-start justify-center items-center whitespace-nowrap gap-x-6">
           <div className="">Get in touch</div>
           <div className="flex items-center gap-x-4">
             <a href="/">
@@ -21,7 +21,7 @@ const FooterWidget = () => {
             </a>
           </div>
         </div>
-        <div className="f-right">
+        <div className="flex-1 flex sm:justify-end justify-center whitespace-nowrap ">
           <a href="/">Home page</a>
         </div>
       </div>

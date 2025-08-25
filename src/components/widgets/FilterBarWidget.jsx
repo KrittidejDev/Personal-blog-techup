@@ -14,7 +14,7 @@ const FilterBarWidget = () => {
   return (
     <div className="container ">
       <div className="title text-h3 mb-8">Latest articles</div>
-      <div className="flex justify-between items-end filter-wrap w-full bg-brown-eeb rounded-2xl px-6 py-4 flex-wrap gap-4">
+      <div className="flex justify-between items-end filter-wrap w-full bg-brown-eeb rounded-2xl px-4 py-4 md:px-6 md:py-4 flex-wrap gap-4 box-border">
         <div className="row-left hidden md:flex">
           {filterOptions.map((e, i) => (
             <Button
@@ -30,10 +30,10 @@ const FilterBarWidget = () => {
             </Button>
           ))}
         </div>
-        <div className="row-right flex-1 min-w-3xs md:max-w-72">
+        <div className="row-right flex-1 min-w-40 sm:min-w-3xs md:max-w-72">
           <InputSearch />
         </div>
-        <div className="row-right flex-1 min-w-3xs md:hidden">
+        <div className="row-right flex-1 min-w-40 sm:min-w-3xs md:hidden">
           <InputDropdown
             options={filterOptions}
             value={_filterActive}
