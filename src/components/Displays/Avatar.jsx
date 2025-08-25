@@ -1,9 +1,9 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export const AvatarDisplay = ({ src, alt }) => {
+export const AvatarDisplay = ({ src, alt, className }) => {
   return (
-    <Avatar>
+    <Avatar className={className}>
       <AvatarImage src={src} />
       <AvatarFallback>{alt}</AvatarFallback>
     </Avatar>

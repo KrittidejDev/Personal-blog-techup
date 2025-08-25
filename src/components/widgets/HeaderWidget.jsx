@@ -2,7 +2,7 @@ import React from "react";
 
 const HeaderWidget = () => {
   return (
-    <div className="container py-[60px] flex items-center justify-center gap-x-[60px] gap-y-10 flex-wrap">
+    <div className="container box-border py-[60px] flex items-center justify-center md:gap-x-5 lg:gap-x-[60px] gap-y-10 flex-wrap ">
       <div className="cal-3-card md:max-w-1">
         <h1 className="text-h2 md:text-h1 text-center lg:text-right mb-6 lg:w-[80%] lg:ml-auto">
           Stay Informed, Stay Inspired
@@ -15,7 +15,7 @@ const HeaderWidget = () => {
       <img
         src="/images/header-img-1.png"
         alt=""
-        className="cal-3-card md:max-w-1/3"
+        className="cal-3-card md:min-w-1/3! md:max-w-1/3"
       />
       <div className="cal-3-card md:max-w-1/3">
         <div className="auther text-b3 text-brown-16b mb-1 ">-Author</div>

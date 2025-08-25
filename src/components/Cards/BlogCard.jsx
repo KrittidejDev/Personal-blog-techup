@@ -11,9 +11,7 @@ export const BlogCard = ({ data }) => {
           className="rounded-md w-full h-full object-cover object-center "
         />
       </div>
-      <div className="tag w-fit px-3 py-1 bg-green-2e9 rounded-full  text-green-279 mb-3">
-        {data?.category}
-      </div>
+      <div className="tag mb-3">{data?.category}</div>
       <h4 className="card-title text-h4 h-14 font-bold! text-brown-31e! line-clamp-2 mb-2 hover:underline cursor-pointer">
         {data?.title}
       </h4>
