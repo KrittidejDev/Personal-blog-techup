@@ -19,6 +19,7 @@ const InputSearch = ({ placeholder, handleSearch }) => {
         placeholder={placeholder}
         value={_value}
         onChange={_handleSearch}
+        className={"bg-white!"}
       />
       <IoSearchOutline className="absolute right-2.5 top-2.5" color="#75716B" />
     </div>
