@@ -1,6 +1,6 @@
 import NavAndFooter from "@/components/MainLayouts/NavAndFooter";
-import BlogListWidget from "@/components/Widgets/BlogListWidget";
-import HeaderWidget from "@/components/Widgets/HeaderWidget";
+import BlogListWidget from "@/components/widgets/BlogListWidget.jsx";
+import HeaderWidget from "@/components/widgets/HeaderWidget";
 
 const Home = () => {
   return (

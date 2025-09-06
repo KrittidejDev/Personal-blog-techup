@@ -1,4 +1,3 @@
-import { AvatarDisplay } from "@/components/Displays/Avatar";
 import NavAndFooter from "@/components/MainLayouts/NavAndFooter";
 import { blogPosts } from "@/util/data/blogPosts";
 import moment from "moment";
