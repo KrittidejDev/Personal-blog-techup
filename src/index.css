@@ -156,7 +156,7 @@ body {
 }
 
 .nav-and-footer-container {
-  @apply min-h-dvh flex flex-col justify-between;
+  @apply min-h-dvh flex flex-col justify-between bg-brown-8f6!;
 }
 
 .widget-container {
@@ -165,15 +165,15 @@ body {
 
 /* button theme */
 .btn-border-16b {
-  @apply border z-50 text-brown-16b text-brown-31e rounded-full text-base px-10 py-3 bg-transparent hover:bg-brown-03b hover:text-white;
+  @apply cursor-pointer border z-50 text-brown-16b text-brown-31e rounded-full text-base px-10 py-3 bg-transparent hover:bg-brown-03b hover:text-white flex items-center;
 }
 
 .btn-31e {
-  @apply border border-brown-31e bg-brown-31e text-white rounded-full text-base px-10 py-3 hover:bg-brown-03b;
+  @apply cursor-pointer border border-brown-31e bg-brown-31e text-white rounded-full text-base px-10 py-3 hover:bg-brown-03b font-medium flex items-center;
 }
 
 .filter-button {
-  @apply py-3 px-5 text-base font-medium text-brown-16b shadow-none bg-transparent rounded-[8px]  hover:bg-brown-6d1;
+  @apply cursor-pointer py-3 px-5 text-base font-medium text-brown-16b shadow-none bg-transparent rounded-[8px]  hover:bg-brown-6d1;
 }
 
 /* font format */
@@ -212,4 +212,87 @@ body {
 
 .tag {
   @apply w-fit px-3 py-1 bg-green-2e9 rounded-full  text-green-279;
+}
+
+/* markdown */
+.markdown {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.markdown :is(h2) {
+  margin-top: 32px;
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.markdown :is(h3, h4, h5, h6) {
+  margin-top: 32px;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.markdown p:not(:is(h2, h3, h4, h5, h6) + p) {
+  margin-top: 22px;
+}
+
+.markdown :is(ul, ol) {
+  list-style-position: outside;
+}
+
+.markdown :is(ul) {
+  list-style-type: "•";
+}
+
+.markdown :is(ol) {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+
+.markdown :is(a) {
+  text-decoration: underline;
+}
+
+.markdown :is(a):hover {
+  text-decoration: underline;
+  color: #726d67;
+  cursor: pointer;
+}
+
+.markdown :is(ul) li {
+  margin-block: 8px;
+  padding-inline-start: 8px;
+  padding-left: 5px;
+  margin-left: 10px;
+}
+
+.markdown :is(ol) li {
+  margin-block: 8px;
+  padding-inline-start: 8px;
+  padding-left: 3px;
+  margin-left: 10px;
+}
+
+.markdown :is(blockquote) {
+  border-left: 3px solid #26231e;
+  margin: 1.5em 10px;
+  padding-left: 10px;
+  font-style: italic;
+}
+
+.markdown :is(hr) {
+  border: none;
+  border-top: 2.5px solid #d1d5db;
+  margin: 1.5em 0;
+  width: 30%;
+}
+
+.markdown img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 2em 0;
+  border-radius: 12px;
 }
