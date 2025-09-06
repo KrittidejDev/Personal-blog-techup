@@ -1,11 +1,16 @@
-import { MainLayout } from "./components/MainLayouts";
-import { HeaderWidget } from "./components/widgets";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes";
+import { AuthProvider } from "./context/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
-    <MainLayout.NavAndFooter>
-      <HeaderWidget />
-    </MainLayout.NavAndFooter>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+        <ToastContainer />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

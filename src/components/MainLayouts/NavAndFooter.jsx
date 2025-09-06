@@ -1,11 +1,13 @@
 import React from "react";
-import { NavbarWidget } from "../widgets";
+import NavbarWidget from "../Widgets/NavbarWidget";
+import FooterWidget from "../Widgets/FooterWidget";
 
 const NavAndFooter = ({ children }) => {
   return (
-    <div className="nav-and-footer-container">
+    <div className="nav-and-footer-container box-border ">
       <NavbarWidget />
       {children}
+      <FooterWidget />
     </div>
   );
 };
