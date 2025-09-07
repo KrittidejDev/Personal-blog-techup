@@ -20,7 +20,11 @@ export const BlogCard = ({ data }) => {
       </p>
       <div className="flex items-center gap-x-4 text-brown-6d1 ">
         <div className="flex items-center gap-x-2 ">
-          <AvatarDisplay src={"/images/header-img-1.png"} alt={"avatar"} />
+          <img
+            src={"/images/header-img-1.png"}
+            alt={"avatar"}
+            className="size-11 rounded-full"
+          />
           <div className="text-b2 text-brown-03b! font-medium!">
             {data?.author}
           </div>

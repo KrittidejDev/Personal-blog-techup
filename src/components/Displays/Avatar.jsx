@@ -42,7 +42,7 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
       </div>
       {_isOpen && (
         <div
-          className={`absolute flex flex-col w-62 bg-brown-8f6 top-14 right-0 rounded-lg shadow-lg  overflow-hidden `}
+          className={`absolute flex flex-col w-62 bg-brown-8f6 top-18 right-0 rounded-lg shadow-lg  overflow-hidden `}
           onMouseLeave={() => {
             setTimeout(() => _setIsOpen(false), 1000);
           }}

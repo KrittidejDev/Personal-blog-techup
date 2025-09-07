@@ -5,10 +5,10 @@ const ArticleProfileWidget = ({ data }) => {
   return (
     <div className="w-full box-border overflow-hidden bg-brown-eeb p-6 md:p-10 rounded-2xl shadow-lg">
       <div className="flex items-center gap-x-2 mb-5">
-        <AvatarDisplay
+        <img
           src={"/images/header-img-1.png"}
           alt={"avatar"}
-          className="size-11"
+          className="size-11 rounded-full"
         />
         <div className="text-h4 text-brown-03b! font-medium! flex flex-col">
           <span className="text-b3 text-brown-16b! mb-[-5px]">Author</span>
