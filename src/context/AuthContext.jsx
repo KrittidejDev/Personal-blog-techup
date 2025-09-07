@@ -1,3 +1,5 @@
+import { userService } from "@/apiServices";
+import { setLogoutHandler } from "@/apiServices/apiService";
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,66 +18,58 @@ export const AuthProvider = ({ children }) => {
   // โหลด token และ user profile เมื่อเปิดเว็บ
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
     if (storedToken) {
       setToken(storedToken);
-      fetchUserProfile(storedToken);
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+        setLoading(false);
+      } else {
+        fetchUserProfile(storedToken); // fetch ถ้าไม่มี user ใน localStorage
+      }
     } else {
       setLoading(false);
     }
   }, []);
 
+  useEffect(() => {
+    // ✅ inject logout เข้าสู่ axios service
+    setLogoutHandler(logout);
+  }, []);
+
   // ดึงข้อมูล user จาก backend
   const fetchUserProfile = async (token) => {
     try {
-      const res = await fetch("/api/me", {
+      const res = await userService.GET_ME_PROFILE({
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      if (!res.ok) throw new Error("Unauthorized");
-
-      const data = await res.json();
-      setUser(data);
+      setUser(res.data);
+      localStorage.setItem("user", JSON.stringify(res.data));
     } catch (err) {
-      console.error("Session expired:", err);
-      logout();
+      logout(); // token หมดอายุ
     } finally {
       setLoading(false);
     }
   };
 
   // login
-  const login = async (token, refreshToken) => {
-    try {
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
-      setToken(token);
+  const login = async (token, refreshToken, userData) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(userData));
+    if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
 
-      // ดึงข้อมูล user
-      const res = await fetch("/api/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+    setToken(token);
+    setUser(userData);
 
-      if (!res.ok) throw new Error("Unauthorized");
-
-      const data = await res.json();
-      setUser(data);
-
-      // เช็ค role
-      if (data.role === "admin") {
-        navigate("/dashboard");
-      } else {
-        navigate("/"); // ถ้าไม่ใช่ admin ไปหน้าแรก
-      }
-    } catch (err) {
-      console.error("Login failed:", err);
-      logout(); // ถ้า login ไม่ผ่าน → ล้างข้อมูล + กลับไปหน้า login
-    }
+    navigate(userData?.role === "admin" ? "/admin" : "/");
   };
 
   // logout
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user");
     setUser(null);
     setToken(null);
     navigate("/login");

@@ -1,7 +1,9 @@
+import { userService } from "@/apiServices";
 import SignInForm from "@/components/Forms/SignInForm";
 import NavAndFooter from "@/components/MainLayouts/NavAndFooter";
 import { useAuth } from "@/context/AuthContext";
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { login } = useAuth();
@@ -9,20 +11,19 @@ const Login = () => {
 
   const _handleSubmit = async (values) => {
     _setIsBgLoading(true);
-    let params = {
-      ...values,
-    };
-    let res = await userService.POST_LOGIN(params);
-    console.log("res login", res);
-    if (res && res.status === 200) {
+    try {
+      let res = await userService.POST_LOGIN(values);
+      if (res && res.status === 200) {
+        _setIsBgLoading(false);
+        await login(res.token, res.refreshToken, res.user);
+      } else {
+        _setIsBgLoading(false);
+        toast.error("เข้าสู่ระบบไม่สำเร็จ");
+      }
+    } catch (err) {
       _setIsBgLoading(false);
-      localStorage.setItem("token", res.data.token);
-      await login(res.data.token, res.data.refreshToken);
-      toast.success("เข้าสู่ระบบสำเร็จ");
-      router.push("/");
-    } else {
-      _setIsBgLoading(false);
-      toast.error("เข้าสู่ระบบไม่สำเร็จ");
+      console.error("Login error:", err);
+      toast.error("เกิดข้อผิดพลาด");
     }
   };
 

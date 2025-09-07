@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { IoIosArrowDown } from "react-icons/io";
 import UserIcon from "../Icons/UserIcon";
 import ResetPasswordIcon from "../Icons/ResetPasswordIcon";
 import SignOutIcon from "../Icons/SignOutIcon";
+import BellIcon from "../Icons/BellIcon";
 
-export const AvatarDisplay = ({ data, className, onLogOut }) => {
+export const NotiDisplay = ({ notiData = true, className, onLogOut }) => {
   const [_isOpen, _setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -29,18 +29,14 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
   return (
     <div className={`${className} relative`} ref={dropdownRef}>
       <div className="flex items-center gap-x-2.5 " onClick={_handleOpen}>
-        <Avatar className={"w-12 h-12"}>
-          <AvatarImage
-            src={
-              data?.avatar || `https://i.pravatar.cc/150?u=${data?.username}`
-            }
-          />
-        </Avatar>
-        <div className="flex flex-nowrap items-center gap-x-1.5 text-b1">
-          {data?.name} <IoIosArrowDown className="size-4 text-brown-16b" />
+        <div className="h-12 w-12 rounded-full border border-brown-eeb flex items-center justify-center">
+          <BellIcon />
         </div>
+        {notiData && (
+          <div className="absolute h-2 w-2 rounded-full bg-red top-1 right-1" />
+        )}
       </div>
-      {_isOpen && (
+      {_isOpen && notiData && (
         <div
           className={`absolute flex flex-col w-62 bg-brown-8f6 top-14 right-0 rounded-lg shadow-lg  overflow-hidden `}
           onMouseLeave={() => {
@@ -48,18 +44,9 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
           }}
           onMouseEnter={() => clearTimeout()}
         >
-          <button className={btnProfileStyle}>
-            <UserIcon />
-            Profile
-          </button>
-          <button className={btnProfileStyle}>
-            <ResetPasswordIcon />
-            Reset password
-          </button>
-          <button onClick={onLogOut} className={btnProfileStyle}>
-            <SignOutIcon />
-            Log out
-          </button>
+          {notiData.map((e) => (
+            <div>item</div>
+          ))}
         </div>
       )}
     </div>

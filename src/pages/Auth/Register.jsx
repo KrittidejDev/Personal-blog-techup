@@ -1,27 +1,57 @@
+import { userService } from "@/apiServices";
+import { BgLoading } from "@/components/Displays/BgLoading";
 import SignUpForm from "@/components/Forms/SignUpForm";
 import NavAndFooter from "@/components/MainLayouts/NavAndFooter";
 import SignUpThankWidget from "@/components/widgets/SignUpThankWidget";
+import { useAuth } from "@/context/AuthContext";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
-  const router = useNavigate();
+  const { login } = useAuth();
   const [_step, _setStep] = useState(1);
+  const [_data, _setData] = useState();
+  const [_isBgloading, _setIsBgLoading] = useState(false);
 
-  const _handleSubmit = () => {
-    _setStep(2);
+  const _handleSubmit = async (values) => {
+    _setIsBgLoading(true);
+    const body = {
+      name: values.name,
+      username: values.username,
+      email: values.email,
+      password: values.password,
+    };
+    try {
+      let res = await userService.POST_SIGNUP(body);
+      if (res) {
+        localStorage.setItem("token", token);
+        _setData(res);
+        _setStep(2);
+        _setIsBgLoading(false);
+        toast.success("ลงทะเบียนสำเร็จ");
+      }
+    } catch (error) {
+      _setIsBgLoading(false);
+      toast.error("ลงทะเบียนไม่สำเร็จ");
+    }
   };
 
-  const _handleContinue = () => {
-    router("/");
+  const _handleContinue = async () => {
+    _setIsBgLoading(true);
+    await login(_data.token, _data.refreshToken, _data.user);
   };
 
   return (
     <NavAndFooter>
-      <div className="widget-container py-10 md:py-16! flex-1">
-        {_step === 1 && <SignUpForm onSubmit={_handleSubmit} />}
-        {_step === 2 && <SignUpThankWidget onContinue={_handleContinue} />}
-      </div>
+      {_isBgloading ? (
+        <BgLoading />
+      ) : (
+        <div className="widget-container py-10 md:py-16! flex-1">
+          {_step === 1 && <SignUpForm onSubmit={_handleSubmit} />}
+          {_step === 2 && <SignUpThankWidget onContinue={_handleContinue} />}
+        </div>
+      )}
     </NavAndFooter>
   );
 };

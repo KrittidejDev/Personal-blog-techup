@@ -1,34 +1,27 @@
 import axios from "axios";
 import { BASE_API } from "./apiConfig";
-import { store } from "@/store";
-import { setLogoutThunk } from "@/store/reduxThunks/logoutThunk";
 import { toast } from "react-toastify";
 
-const getConfig = (token) => {
-  let config;
-  if (token) {
-    config = {
-      baseURL: BASE_API,
-      headers: {
-        "Content-Type": "application/json",
-        token: token,
-      },
-    };
-  } else {
-    config = {
-      baseURL: BASE_API,
-      headers: {
-        "Content-Type": "application/json",
-        token: token,
-      },
-    };
-  }
+// --- ตัวแปรที่จะเก็บ logout จาก context
+let logoutFn = null;
 
-  return config;
+// ฟังก์ชันนี้ใช้ให้ AuthProvider inject logout เข้ามา
+export const setLogoutHandler = (fn) => {
+  logoutFn = fn;
+};
+
+const getConfig = (token) => {
+  return {
+    baseURL: BASE_API,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
 
 const getConfigFormData = (token, callback) => {
-  const config = {
+  return {
     baseURL: BASE_API,
     headers: {
       "Content-Type": "multipart/form-data",
@@ -43,20 +36,23 @@ const getConfigFormData = (token, callback) => {
       callback && callback(percentCompleted);
     },
   };
-  return config;
 };
 
-const axiosSuccess = (result) => {
-  return result.data;
-};
+const axiosSuccess = (result) => result.data;
 
 const axiosError = (error) => {
   console.log("axios error =>", error);
+
   // Handle 403 - Token expired
   if (error?.response?.status === 403) {
     toast.error("เซสชันของคุณหมดอายุแล้ว กรุณาเข้าสู่ระบบใหม่");
-    store.dispatch(setLogoutThunk());
-    window.location.href = "/";
+
+    if (logoutFn) {
+      logoutFn(); // ✅ เรียก logout จาก context
+    } else {
+      window.location.href = "/login";
+    }
+
     return error.response;
   }
 
@@ -70,11 +66,10 @@ const axiosError = (error) => {
 };
 
 const axiosService = async (type, url, params, callback) => {
-  const config = getConfig(localStorage.getItem("token"));
-  const configFormData = getConfigFormData(
-    localStorage.getItem("token"),
-    callback
-  );
+  const token = localStorage.getItem("token");
+  const config = getConfig(token);
+  const configFormData = getConfigFormData(token, callback);
+
   switch (type) {
     case "get":
       if (params) config.params = params;
@@ -115,7 +110,6 @@ const axiosService = async (type, url, params, callback) => {
         .put(url, params, configFormData)
         .then(axiosSuccess)
         .catch(axiosError);
-
     default:
       return false;
   }

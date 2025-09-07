@@ -4,87 +4,89 @@ const apiPath = "/api";
 
 export const userService = {
   POST_LOGIN: (params) => {
-    return apiService.post(`${apiPath}/member/login`, params);
+    return apiService.post(`${apiPath}/auth/login`, params);
   },
   POST_LOGOUT: (params) => {
     return apiService.post(`${apiPath}/login/logout`, params);
   },
-
   POST_SIGNUP: (params) => {
-    return apiService.post(`${apiPath}/member/register`, params);
+    return apiService.post(`${apiPath}/auth/register`, params);
+  },
+  GET_ME_PROFILE: (params) => {
+    return apiService.get(`${apiPath}/auth/me`, params);
   },
 
-  POST_MEMBER_REGISTER: (params) => {
-    return apiService.post(`${apiPath}/member/register`, params);
-  },
-  POST_UPLOAD_MEMBER_MEDIA: (params) => {
-    return apiService.post_formdata(`${apiPath}/media/upload/member`, params);
-  },
-  POST_MEDIA_DELETE: (params) => {
-    return apiService.post(`${apiPath}/media/delete`, params);
-  },
+  // POST_MEMBER_REGISTER: (params) => {
+  //   return apiService.post(`${apiPath}/member/register`, params);
+  // },
+  // POST_UPLOAD_MEMBER_MEDIA: (params) => {
+  //   return apiService.post_formdata(`${apiPath}/media/upload/member`, params);
+  // },
+  // POST_MEDIA_DELETE: (params) => {
+  //   return apiService.post(`${apiPath}/media/delete`, params);
+  // },
 
   // ACCOUNT
-  GET_ACCOUNT_MY_TRANSACTION_LIST: () => {
-    return apiService.get(`${apiPath}/account-transaction/my-transactions`);
-  },
-  GET_ACCOUNT_SUMMARY_DETAIL: (id) => {
-    return apiService.get(`${apiPath}/account-transaction/my-summary`);
-  },
+  // GET_ACCOUNT_MY_TRANSACTION_LIST: () => {
+  //   return apiService.get(`${apiPath}/account-transaction/my-transactions`);
+  // },
+  // GET_ACCOUNT_SUMMARY_DETAIL: (id) => {
+  //   return apiService.get(`${apiPath}/account-transaction/my-summary`);
+  // },
 
   // AUCTION BOARD
-  GET_AUCTION_BOARD_LIST: (queryString) => {
-    return apiService.get(
-      `${apiPath}/auction-board${queryString ? queryString : ""}`
-    );
-  },
-  GET_AUCTION_BOARD_DETAIL: (id) => {
-    return apiService.get(`${apiPath}/auction-board/${id}`);
-  },
-  GET_AUCTION_BID_HISTORY: (auctionId) => {
-    return apiService.get(`${apiPath}/bid-history/auction/${auctionId}`);
-  },
+  // GET_AUCTION_BOARD_LIST: (queryString) => {
+  //   return apiService.get(
+  //     `${apiPath}/auction-board${queryString ? queryString : ""}`
+  //   );
+  // },
+  // GET_AUCTION_BOARD_DETAIL: (id) => {
+  //   return apiService.get(`${apiPath}/auction-board/${id}`);
+  // },
+  // GET_AUCTION_BID_HISTORY: (auctionId) => {
+  //   return apiService.get(`${apiPath}/bid-history/auction/${auctionId}`);
+  // },
 
   // Auction Me
-  GET_MY_AUCTION_LIST: (queryString) => {
-    return apiService.get(
-      `${apiPath}/auction/me${queryString ? queryString : ""}`
-    );
-  },
-  GET_MY_TRANSACTION: (queryString) => {
-    return apiService.get(
-      `${apiPath}/member/me/payment${queryString ? queryString : ""}`
-    );
-  },
-  DELETE_MY_AUCTION_DETAIL: (id) => {
-    return apiService.delete(`${apiPath}/auction/${id}/my-auction`);
-  },
+  // GET_MY_AUCTION_LIST: (queryString) => {
+  //   return apiService.get(
+  //     `${apiPath}/auction/me${queryString ? queryString : ""}`
+  //   );
+  // },
+  // GET_MY_TRANSACTION: (queryString) => {
+  //   return apiService.get(
+  //     `${apiPath}/member/me/payment${queryString ? queryString : ""}`
+  //   );
+  // },
+  // DELETE_MY_AUCTION_DETAIL: (id) => {
+  //   return apiService.delete(`${apiPath}/auction/${id}/my-auction`);
+  // },
 
   // AUCTION
-  GET_AUCTION_LIST: (queryString) => {
-    return apiService.get(
-      `${apiPath}/auction${queryString ? queryString : ""}`
-    );
-  },
-  GET_AUCTION_DETAIL: (id) => {
-    return apiService.get(`${apiPath}/auction/${id}`);
-  },
-  POST_AUCTION_CREATE: (params) => {
-    return apiService.post(`${apiPath}/auction`, params);
-  },
-  POST_PAYMENT_REPORT_AUCTION: (id, params) => {
-    return apiService.post(
-      `${apiPath}/auction/${id}/payment/upload-slip`,
-      params
-    );
-  },
-  PATCH_SHIPPPING_AUCTION: (id, params) => {
-    return apiService.patch(`${apiPath}/auction/${id}/shipping/ship`, params);
-  },
+  // GET_AUCTION_LIST: (queryString) => {
+  //   return apiService.get(
+  //     `${apiPath}/auction${queryString ? queryString : ""}`
+  //   );
+  // },
+  // GET_AUCTION_DETAIL: (id) => {
+  //   return apiService.get(`${apiPath}/auction/${id}`);
+  // },
+  // POST_AUCTION_CREATE: (params) => {
+  //   return apiService.post(`${apiPath}/auction`, params);
+  // },
+  // POST_PAYMENT_REPORT_AUCTION: (id, params) => {
+  //   return apiService.post(
+  //     `${apiPath}/auction/${id}/payment/upload-slip`,
+  //     params
+  //   );
+  // },
+  // PATCH_SHIPPPING_AUCTION: (id, params) => {
+  //   return apiService.patch(`${apiPath}/auction/${id}/shipping/ship`, params);
+  // },
 
-  POST_UPLOAD_AUCTION_MEDIA: (params) => {
-    return apiService.post_formdata(`${apiPath}/media/upload/auction`, params);
-  },
+  // POST_UPLOAD_AUCTION_MEDIA: (params) => {
+  //   return apiService.post_formdata(`${apiPath}/media/upload/auction`, params);
+  // },
 
   // ARTICLE
   GET_ARTICLE_LIST: (queryString) => {

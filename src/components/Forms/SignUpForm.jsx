@@ -11,7 +11,7 @@ const SignUpForm = ({ onSubmit }) => {
       .string()
       .required("Name is required")
       .min(2, "Name must be at least 2 characters"),
-    user_name: yup
+    username: yup
       .string()
       .required("Username is required")
       .min(3, "Username must be at least 3 characters"),
@@ -65,10 +65,10 @@ const SignUpForm = ({ onSubmit }) => {
                 {...field}
                 label={"Username"}
                 placeholder="Username"
-                errors={errors.user_name?.message}
+                errors={errors.username?.message}
               />
             )}
-            name="user_name"
+            name="username"
             defaultValue=""
           />
         </div>{" "}
