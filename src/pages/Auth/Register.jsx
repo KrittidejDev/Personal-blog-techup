@@ -5,7 +5,6 @@ import NavAndFooter from "@/components/MainLayouts/NavAndFooter";
 import SignUpThankWidget from "@/components/widgets/SignUpThankWidget";
 import { useAuth } from "@/context/AuthContext";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Register = () => {
@@ -24,12 +23,15 @@ const Register = () => {
     };
     try {
       let res = await userService.POST_SIGNUP(body);
-      if (res) {
-        localStorage.setItem("token", token);
+      if (res.status === 200) {
+        localStorage.setItem("token", res.token);
         _setData(res);
         _setStep(2);
         _setIsBgLoading(false);
         toast.success("ลงทะเบียนสำเร็จ");
+      } else {
+        toast.error(res.data.message);
+        _setIsBgLoading(false);
       }
     } catch (error) {
       _setIsBgLoading(false);

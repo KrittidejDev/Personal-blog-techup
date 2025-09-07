@@ -22,11 +22,16 @@ export const AuthProvider = ({ children }) => {
 
     if (storedToken) {
       setToken(storedToken);
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+      if (storedUser && storedUser !== "undefined") {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (e) {
+          console.error("❌ Error parsing user:", e);
+          localStorage.removeItem("user"); // กันค่าเสีย
+        }
         setLoading(false);
       } else {
-        fetchUserProfile(storedToken); // fetch ถ้าไม่มี user ใน localStorage
+        fetchUserProfile(storedToken);
       }
     } else {
       setLoading(false);
@@ -56,11 +61,13 @@ export const AuthProvider = ({ children }) => {
   // login
   const login = async (token, refreshToken, userData) => {
     localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));
+    if (userData) {
+      localStorage.setItem("user", JSON.stringify(userData));
+      setUser(userData);
+    }
     if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
 
     setToken(token);
-    setUser(userData);
 
     navigate(userData?.role === "admin" ? "/admin" : "/");
   };
