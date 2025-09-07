@@ -7,11 +7,8 @@ import InputPassword from "../Inputs/InputPassword";
 
 const SignInForm = ({ onSubmit }) => {
   const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Invalid email format")
-      .required("Email is required")
-      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"),
+    emailOrUsername: yup.string().required("Email is required"),
+    // .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"),
     password: yup
       .string()
       .required("Password is required")
@@ -36,12 +33,12 @@ const SignInForm = ({ onSubmit }) => {
             render={({ field }) => (
               <InputTextFeild
                 {...field}
-                label={"Email"}
-                placeholder="Email"
-                errors={errors.email?.message}
+                label={"Email / Username"}
+                placeholder="Email or Username"
+                errors={errors.emailOrUsername?.message}
               />
             )}
-            name="email"
+            name="emailOrUsername"
             defaultValue=""
           />
         </div>
