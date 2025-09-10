@@ -2,6 +2,7 @@ import React from "react";
 import SideBarWidget from "../widgets/SideBarWidget";
 import { SidebarProvider } from "../ui/sidebar";
 import AdminNavbarWidget from "../widgets/AdminNavbarWidget";
+import { useState } from "react";
 
 const AdminMainLayOut = ({
   children,
@@ -12,10 +13,15 @@ const AdminMainLayOut = ({
   onDraft,
   isAdd,
 }) => {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <SidebarProvider>
-      <SideBarWidget />
-      <main className="flex flex-1 flex-col">
+    <SidebarProvider className={"flex"}>
+      <SideBarWidget collapsed={collapsed} setCollapsed={setCollapsed} />
+      <main
+        className={`flex-1 flex flex-col transition-all duration-300`}
+        style={{ marginLeft: collapsed ? "70px" : "275px" }}
+      >
         <AdminNavbarWidget
           title={title}
           isAdd={isAdd}
@@ -24,7 +30,9 @@ const AdminMainLayOut = ({
           btnDraftLabel={btnDraftLabel}
           onDraft={onDraft}
         />
-        <div className="px-[60px] flex-1 py-10 bg-brown-8f6">{children}</div>
+        <div className="px-[60px] flex flex-col flex-1 overflow-y-auto py-10 bg-brown-8f6">
+          {children}
+        </div>
       </main>
     </SidebarProvider>
   );

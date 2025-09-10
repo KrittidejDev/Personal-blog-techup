@@ -4,10 +4,13 @@ import { IoIosArrowDown } from "react-icons/io";
 import UserIcon from "../Icons/UserIcon";
 import ResetPasswordIcon from "../Icons/ResetPasswordIcon";
 import SignOutIcon from "../Icons/SignOutIcon";
+import { useNavigate } from "react-router-dom";
+import AdminBook from "../Icons/AdminBook";
 
 export const AvatarDisplay = ({ data, className, onLogOut }) => {
   const [_isOpen, _setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const router = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -21,6 +24,10 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
 
   const _handleOpen = () => {
     _setIsOpen((prev) => !prev);
+  };
+
+  const _handleClickAdmin = () => {
+    router("/admin/article");
   };
 
   const btnProfileStyle =
@@ -48,6 +55,12 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
           }}
           onMouseEnter={() => clearTimeout()}
         >
+          {data?.role === "admin" && (
+            <button className={btnProfileStyle} onClick={_handleClickAdmin}>
+              <AdminBook />
+              Dashboard
+            </button>
+          )}
           <button className={btnProfileStyle}>
             <UserIcon />
             Profile
