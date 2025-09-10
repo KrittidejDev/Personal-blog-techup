@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
 
     setToken(token);
 
-    navigate(userData?.role === "admin" ? "/admin" : "/");
+    navigate(userData?.role === "admin" ? "/admin/article" : "/");
   };
 
   // logout

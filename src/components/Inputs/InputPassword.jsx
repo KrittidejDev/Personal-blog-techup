@@ -36,7 +36,7 @@ const InputPassword = ({
           onChange={onChange}
           disabled={disabled}
           className={cx(
-            "border rounded-md px-3 py-2 w-full pr-10",
+            "border bg-white rounded-md px-3 py-2 w-full pr-10",
             errors
               ? "border-red-500 text-red-600 placeholder-red-400"
               : "border-gray-300 text-black placeholder-gray-400"

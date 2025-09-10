@@ -6,7 +6,11 @@ import Register from "@/pages/Auth/Register";
 import Article from "@/pages/User/ArticleContainer/Article";
 import ArticleDetail from "@/pages/User/ArticleContainer/ArticleDetailContainer/ArticleDetail";
 import RoleRoute from "@/lib/routes/RoleRoute";
-import AdminArticle from "@/pages/Admin/Article/AdminArticle";
+import AdminArticle from "@/pages/Admin/AdminArticle/AdminArticle";
+import AdminCategory from "@/pages/Admin/AdminCategory/AdminCategory";
+import AdminProfile from "@/pages/Admin/AdminProfile/AdminProfile";
+import AdminNotification from "@/pages/Admin/AdminNotification/AdminNotification";
+import AdminResetPassword from "@/pages/Admin/AdminResetPassword/AdminResetPassword";
 
 export default function AppRoutes() {
   return useRoutes([
@@ -20,9 +24,11 @@ export default function AppRoutes() {
     {
       element: <RoleRoute roles={["admin"]} />,
       children: [
-        { path: "/admin", element: <AdminArticle /> },
-        // { path: "/admin/users", element: <AdminUsers /> },
-        // { path: "/admin/settings", element: <AdminSettings /> },
+        { path: "/admin/article", element: <AdminArticle /> },
+        { path: "/admin/category", element: <AdminCategory /> },
+        { path: "/admin/profile", element: <AdminProfile /> },
+        { path: "/admin/notification", element: <AdminNotification /> },
+        { path: "/admin/reset-password", element: <AdminResetPassword /> },
       ],
     },
   ]);
