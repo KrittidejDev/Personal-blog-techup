@@ -12,7 +12,6 @@ import {
   SidebarTrigger,
 } from "../ui/sidebar";
 import Logo from "../Icons/Logo";
-import { useState } from "react";
 import AdminBook from "../Icons/AdminBook";
 import AdminFolder from "../Icons/AdminFolder";
 import AdminProfile from "../Icons/AdminProfile";
@@ -50,15 +49,15 @@ const items = [
   },
 ];
 
-const SideBarWidget = () => {
+const SideBarWidget = ({ collapsed, setCollapsed }) => {
   const location = useLocation().pathname;
-  const [collapsed, setCollapsed] = useState(false);
   const { logout } = useAuth();
 
   return (
     <div
       collapsed={collapsed}
-      className="bg-brown-eeb py-4  box-border h-screen flex flex-col"
+      // className="bg-brown-eeb py-4  box-border flex-1 flex flex-col max-w-[280px] sticky bottom-0 left-0 top-0"
+      className="fixed top-0 left-0 bottom-0 bg-brown-eeb py-4 box-border flex flex-col max-w-[280px] h-screen z-50  transition-all! duration-300!"
     >
       <SidebarHeader>
         <div
@@ -95,7 +94,7 @@ const SideBarWidget = () => {
           <div className=" overflow-y-auto flex-1 ">
             {items.map((item) => (
               <div key={item.title}>
-                <button asChild className="w-full">
+                <button className="w-full">
                   <a
                     href={item.url}
                     className={` flex items-center gap-3 p-6 font-medium  transition-colors
@@ -118,7 +117,7 @@ const SideBarWidget = () => {
         </div>
       </SidebarContent>
       <SidebarFooter className={"p-0 gap-0 "}>
-        <button asChild className="w-full ">
+        <button className="w-full ">
           <a
             href={"/"}
             className={` flex items-center gap-3 p-6 font-medium  transition-colors
@@ -134,7 +133,6 @@ const SideBarWidget = () => {
           </a>
         </button>
         <button
-          asChild
           className={`w-full flex items-center gap-3 p-6 font-medium  transition-color text-brown-16b hover:bg-brown-6d1/30 hover:text-brown-03b border-t border-t-brown-6d1/30 cursor-pointer`}
           onClick={logout}
         >
