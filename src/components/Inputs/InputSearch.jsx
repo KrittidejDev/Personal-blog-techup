@@ -3,7 +3,7 @@ import { Input } from "../ui/input";
 import { IoSearchOutline } from "react-icons/io5";
 import { useState } from "react";
 
-const InputSearch = ({ placeholder, handleSearch }) => {
+const InputSearch = ({ placeholder, handleSearch, iconLeft }) => {
   const [_value, _setValue] = useState("");
 
   const _handleSearch = (e) => {
@@ -19,9 +19,12 @@ const InputSearch = ({ placeholder, handleSearch }) => {
         placeholder={placeholder}
         value={_value}
         onChange={_handleSearch}
-        className={"bg-white!"}
+        className={`bg-white! ${iconLeft && "pl-8"}`}
       />
-      <IoSearchOutline className="absolute right-2.5 top-2.5" color="#75716B" />
+      <IoSearchOutline
+        className={`absolute top-2.5 ${iconLeft ? "left-2.5" : "right-2.5 "}`}
+        color="#75716B"
+      />
     </div>
   );
 };

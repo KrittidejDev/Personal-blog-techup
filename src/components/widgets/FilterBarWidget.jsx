@@ -35,6 +35,7 @@ const FilterBarWidget = () => {
         </div>
         <div className="row-right flex-1 min-w-40 sm:min-w-3xs md:hidden">
           <InputDropdown
+            label={"Category"}
             options={filterOptions}
             value={_filterActive}
             onChange={_handleFilterClick}
