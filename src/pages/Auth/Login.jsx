@@ -1,4 +1,5 @@
 import { userService } from "@/apiServices";
+import { BgLoading } from "@/components/Displays/BgLoading";
 import SignInForm from "@/components/Forms/SignInForm";
 import NavAndFooter from "@/components/MainLayouts/NavAndFooter";
 import { useAuth } from "@/context/AuthContext";
@@ -7,7 +8,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const { login } = useAuth();
-  const [_isBgloading, _setIsBgLoading] = useState(false);
+  const [_isBgLoading, _setIsBgLoading] = useState(false);
 
   const _handleSubmit = async (values) => {
     _setIsBgLoading(true);
@@ -29,9 +30,13 @@ const Login = () => {
 
   return (
     <NavAndFooter>
-      <div className="widget-container py-10 md:py-16! flex-1 ">
-        <SignInForm onSubmit={_handleSubmit} />
-      </div>
+      {_isBgLoading ? (
+        <BgLoading />
+      ) : (
+        <div className="widget-container py-10 md:py-16! flex-1 ">
+          <SignInForm onSubmit={_handleSubmit} />
+        </div>
+      )}
     </NavAndFooter>
   );
 };

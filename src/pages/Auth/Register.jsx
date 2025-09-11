@@ -11,7 +11,7 @@ const Register = () => {
   const { login } = useAuth();
   const [_step, _setStep] = useState(1);
   const [_data, _setData] = useState();
-  const [_isBgloading, _setIsBgLoading] = useState(false);
+  const [_isBgLoading, _setIsBgLoading] = useState(false);
 
   const _handleSubmit = async (values) => {
     _setIsBgLoading(true);
@@ -46,7 +46,7 @@ const Register = () => {
 
   return (
     <NavAndFooter>
-      {_isBgloading ? (
+      {_isBgLoading ? (
         <BgLoading />
       ) : (
         <div className="widget-container py-10 md:py-16! flex-1">
