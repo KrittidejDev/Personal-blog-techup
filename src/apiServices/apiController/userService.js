@@ -16,6 +16,11 @@ export const userService = {
     return apiService.get(`${apiPath}/auth/me`, params);
   },
 
+  //  admin
+  RESET_PASSWORD: (id, params) => {
+    return apiService.patch(`${apiPath}/users/${id}/password`, params);
+  },
+
   // POST_MEMBER_REGISTER: (params) => {
   //   return apiService.post(`${apiPath}/member/register`, params);
   // },

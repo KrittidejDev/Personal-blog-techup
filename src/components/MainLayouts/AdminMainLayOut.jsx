@@ -20,7 +20,7 @@ const AdminMainLayOut = ({
       <SideBarWidget collapsed={collapsed} setCollapsed={setCollapsed} />
       <main
         className={`flex-1 flex flex-col transition-all duration-300`}
-        style={{ marginLeft: collapsed ? "70px" : "275px" }}
+        style={{ marginLeft: collapsed ? "70px" : "280px" }}
       >
         <AdminNavbarWidget
           title={title}
