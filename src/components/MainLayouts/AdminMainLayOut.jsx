@@ -19,7 +19,7 @@ const AdminMainLayOut = ({
     <SidebarProvider className={"flex"}>
       <SideBarWidget collapsed={collapsed} setCollapsed={setCollapsed} />
       <main
-        className={`flex-1 flex flex-col transition-all duration-300`}
+        className={`flex-1 flex flex-col transition-all duration-300 `}
         style={{ marginLeft: collapsed ? "70px" : "280px" }}
       >
         <AdminNavbarWidget
@@ -30,7 +30,7 @@ const AdminMainLayOut = ({
           btnDraftLabel={btnDraftLabel}
           onDraft={onDraft}
         />
-        <div className="px-[60px] flex flex-col flex-1 overflow-y-auto py-10 bg-brown-8f6">
+        <div className="px-[60px] flex flex-col flex-1 overflow-y-auto py-10 bg-brown-8f6 overflow-x-hidden box-border">
           {children}
         </div>
       </main>

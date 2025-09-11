@@ -24,8 +24,6 @@ const ArticleDetail = () => {
     _setData(res);
   };
 
-  console.log("DATAAA", _data);
-
   return (
     <NavAndFooter>
       <div className="flex items-center justify-center w-full box-border  ">
