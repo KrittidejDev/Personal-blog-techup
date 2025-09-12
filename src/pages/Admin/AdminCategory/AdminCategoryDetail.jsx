@@ -51,6 +51,9 @@ const AdminCategoryDetail = () => {
         if (res.status === 201) {
           toast.success("Create category success");
           router("/admin/category");
+        } else {
+          toast.error("ไม่สำเร็จ กรุณาตรวจสอบ category name");
+          _setIsBgLoading(false);
         }
       } else {
         const res = await userService.PUT_EDIT_CATEGORY(id, params);

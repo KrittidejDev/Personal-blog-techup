@@ -1,11 +1,13 @@
 import { userService } from "@/apiServices";
 import { BgLoading } from "@/components/Displays/BgLoading";
+import ModalEmpty from "@/components/Displays/ModalEmpty";
 import PenEdit from "@/components/Icons/PenEdit";
 import TrashDelete from "@/components/Icons/TrashDelete";
 import InputSearch from "@/components/Inputs/InputSearch";
 import AdminMainLayOut from "@/components/MainLayouts/AdminMainLayOut";
 import { Pagination } from "@/components/Tables/TablePagination";
 import { TableStandard } from "@/components/Tables/TablesStandard";
+import { Button } from "@/components/ui/button";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -17,6 +19,7 @@ const AdminCategory = () => {
   const [_paginationData, _setPaginationData] = useState({});
   const [_search, _setSearch] = useState();
   const [_page, _setPage] = useState();
+  const [_renderModal, _setRenderModal] = useState(null);
 
   const _fetchCategory = async () => {
     _setIsBgLoading(true);
@@ -86,9 +89,33 @@ const AdminCategory = () => {
     {
       title: "Delete",
       icon: <TrashDelete />,
-      onClick: (row) => _handleDelete(row._id),
+      onClick: (row) => {
+        _setRenderModal(
+          <div className="flex flex-col items-center pt-10 pb-5 w-[477px]">
+            <div className="text-h3 text-brown-31e! mb-6">Delete category</div>
+            <div className="text-b1 text-brown-16b mb-6">
+              Do you want to delete this category?{" "}
+            </div>
+            <div className="flex justify-center items-center gap-x-2">
+              <Button className={"btn-border-16b"} onClick={_handleCloseModal}>
+                Cancel
+              </Button>
+              <Button
+                className={"btn-31e"}
+                onClick={() => _handleDelete(row._id)}
+              >
+                Delete
+              </Button>
+            </div>
+          </div>
+        );
+      },
     },
   ];
+
+  const _handleCloseModal = () => {
+    _setRenderModal(false);
+  };
 
   return (
     <AdminMainLayOut
@@ -120,6 +147,13 @@ const AdminCategory = () => {
           />
         </>
       )}
+      <ModalEmpty
+        isCloseBtn
+        isShowModal={_renderModal ? true : false}
+        onClose={_handleCloseModal}
+      >
+        {_renderModal}
+      </ModalEmpty>
     </AdminMainLayOut>
   );
 };
