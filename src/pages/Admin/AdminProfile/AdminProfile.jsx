@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 const AdminProfile = () => {
   const formRef = useRef();
+
   const [_isBgLoading, _setIsBgLoading] = useState(true);
   const [_data, _setData] = useState();
   const [_dataUpdate, _setDataUpdate] = useState();
@@ -51,9 +52,11 @@ const AdminProfile = () => {
         ...data,
         avatar: avatarUrl,
       });
+
       if (profileRes.status === 200) {
         toast.success("Profile updated successfully!");
-        _setData(profileRes._doc);
+        _setData(profileRes.user);
+        localStorage.setItem("user", JSON.stringify(profileRes.user));
         _setIsBgLoading(false);
         _fetchMyProfile();
       }

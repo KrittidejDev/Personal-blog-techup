@@ -15,8 +15,8 @@ const SuccessRegisterIcon = ({
       <path
         d="M26 44L33.2331 49.4248C33.6618 49.7463 34.2677 49.6728 34.607 49.2581L52 28"
         stroke="white"
-        stroke-width="6"
-        stroke-linecap="round"
+        strokeWidth="6"
+        strokeLinecap="round"
       />
     </svg>
   );
