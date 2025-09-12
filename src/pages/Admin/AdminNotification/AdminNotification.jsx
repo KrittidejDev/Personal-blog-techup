@@ -33,7 +33,7 @@ const AdminNotification = () => {
 const data_mockup = [
   {
     comment_id: 1,
-    avatar: "/public/images/header-img-1.png",
+    avatar: "/images/header-img-1.png",
     commented_name: "Jacob Lash",
     blog_name: " The Fascinating World of Cats: Why We Love Our Furry Friends",
     message:
@@ -42,7 +42,7 @@ const data_mockup = [
   },
   {
     comment_id: 2,
-    avatar: "/public/images/header-img-1.png",
+    avatar: "/images/header-img-1.png",
     commented_name: "Jacob Lash",
     blog_name: " The Fascinating World of Cats: Why We Love Our Furry Friends",
     message: "",

@@ -43,11 +43,11 @@ const AdminResetPassword = () => {
 
   const _handleConfirm = async () => {
     _setIsBgLoading(true);
-    let param = {
-      oldPassword: _data.password,
-      newPassword: _data.new_password,
-    };
     try {
+      let param = {
+        oldPassword: _data.password,
+        newPassword: _data.new_password,
+      };
       const res = await userService.RESET_PASSWORD(id, param);
       if (res.status === 200) {
         toast.success("Reset password completed");

@@ -19,9 +19,29 @@ export const userService = {
     return apiService.put(`${apiPath}/users/${id}`, params);
   },
 
-  //  admin
+  //  reset password
   RESET_PASSWORD: (id, params) => {
     return apiService.patch(`${apiPath}/users/${id}/password`, params);
+  },
+
+  // Category
+  GET_CATEGORY: (queryString) => {
+    return apiService.get(
+      `${apiPath}/categories${queryString ? queryString : ""}`
+    );
+  },
+
+  GET_CATEGORY_BY_ID: (id, params) => {
+    return apiService.get(`${apiPath}/categories/${id}`, params);
+  },
+  POST_CREATE_CATEGORY: (params) => {
+    return apiService.post(`${apiPath}/categories`, params);
+  },
+  PUT_EDIT_CATEGORY: (id, params) => {
+    return apiService.put(`${apiPath}/categories/${id}`, params);
+  },
+  DELETE_CATEGORY: (id) => {
+    return apiService.delete(`${apiPath}/categories/${id}`);
   },
 
   // file upload
