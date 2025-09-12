@@ -55,10 +55,8 @@ const SideBarWidget = ({ collapsed, setCollapsed }) => {
 
   return (
     <div
-      collapsed={collapsed}
-      // className="bg-brown-eeb py-4  box-border flex-1 flex flex-col max-w-[280px] sticky bottom-0 left-0 top-0"
       className={`fixed top-0 left-0 bottom-0 bg-brown-eeb py-4 box-border flex flex-col  h-screen z-50  transition-all! duration-300! ${
-        !collapsed && "w-[280px]"
+        !collapsed ? "w-[280px] " : "w-[80px]"
       }`}
     >
       <SidebarHeader>

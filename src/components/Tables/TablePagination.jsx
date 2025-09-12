@@ -1,31 +1,18 @@
-import { useState } from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
 export const Pagination = ({
-  totalItems,
-  initialItemsPerPage = 10,
-  showItemsPerPage = true,
+  totalItems, // จาก API: total
+  currentPage, // จาก API: page
+  totalPages, // จาก API: totalPages
   showPageInfo = true,
-  onPageChange,
-  onItemsPerPageChange,
+  onPageChange, // ฟังก์ชันเรียกเมื่อเปลี่ยนหน้า
 }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(initialItemsPerPage);
-
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const startItem = (currentPage - 1) * itemsPerPage + 1;
-  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+  const startItem = totalItems === 0 ? 0 : (currentPage - 1) * 1 + 1; // ปรับให้เริ่มจาก 1
+  const endItem = Math.min(currentPage * 1, totalItems); // สมมติ API ส่งจำนวนต่อ page fixed แล้ว
 
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages) return;
-    setCurrentPage(page);
     onPageChange?.(page);
-  };
-
-  const handleItemsPerPageChange = (newItemsPerPage) => {
-    setItemsPerPage(newItemsPerPage);
-    setCurrentPage(1);
-    onItemsPerPageChange?.(newItemsPerPage);
   };
 
   const getVisiblePages = () => {
@@ -51,37 +38,18 @@ export const Pagination = ({
     return pages;
   };
 
-  const visiblePages = getVisiblePages();
-  const isPaginationVisible = totalItems > itemsPerPage;
+  if (!totalItems || totalPages <= 1) return null;
 
-  if (!isPaginationVisible) return null;
+  const visiblePages = getVisiblePages();
 
   return (
     <div className="bg-white px-4 py-3 border-t border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
-      {/* Left side: items per page + info */}
-      <div className="flex items-center gap-3 flex-wrap">
-        {showItemsPerPage && (
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-700">Show</span>
-            <select
-              value={itemsPerPage}
-              onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
-              className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-            </select>
-            <span className="text-sm text-gray-700">entries</span>
-          </div>
-        )}
-        {showPageInfo && (
-          <div className="text-sm text-gray-700">
-            Showing {startItem} to {endItem} of {totalItems} entries
-          </div>
-        )}
-      </div>
+      {/* Left side: info */}
+      {showPageInfo && (
+        <div className="text-sm text-gray-700">
+          Showing {startItem} to {endItem} of {totalItems} entries
+        </div>
+      )}
 
       {/* Right side: pagination buttons */}
       <div className="flex items-center gap-1 flex-wrap">

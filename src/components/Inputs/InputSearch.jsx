@@ -2,15 +2,30 @@ import React from "react";
 import { Input } from "../ui/input";
 import { IoSearchOutline } from "react-icons/io5";
 import { useState } from "react";
+import { useEffect } from "react";
 
-const InputSearch = ({ placeholder, handleSearch, iconLeft }) => {
-  const [_value, _setValue] = useState("");
+const InputSearch = ({
+  placeholder,
+  handleSearch,
+  iconLeft,
+  value,
+  delay = 500,
+}) => {
+  const [_value, _setValue] = useState(value);
 
-  const _handleSearch = (e) => {
-    let textData = e.target.value;
-    _setValue(textData);
-    handleSearch?.(textData);
+  const _handleChange = (e) => {
+    _setValue(e.target.value);
   };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      handleSearch?.(_value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [_value, delay, handleSearch]);
 
   return (
     <div className="flex flex-1 relative">
@@ -18,7 +33,7 @@ const InputSearch = ({ placeholder, handleSearch, iconLeft }) => {
         type={"text"}
         placeholder={placeholder}
         value={_value}
-        onChange={_handleSearch}
+        onChange={_handleChange}
         className={`bg-white! ${iconLeft && "pl-8"}`}
       />
       <IoSearchOutline

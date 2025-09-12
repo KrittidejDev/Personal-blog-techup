@@ -11,6 +11,7 @@ import AdminCategory from "@/pages/Admin/AdminCategory/AdminCategory";
 import AdminProfile from "@/pages/Admin/AdminProfile/AdminProfile";
 import AdminNotification from "@/pages/Admin/AdminNotification/AdminNotification";
 import AdminResetPassword from "@/pages/Admin/AdminResetPassword/AdminResetPassword";
+import AdminCategoryDetail from "@/pages/Admin/AdminCategory/AdminCategoryDetail";
 
 export default function AppRoutes() {
   return useRoutes([
@@ -26,6 +27,7 @@ export default function AppRoutes() {
       children: [
         { path: "/admin/article", element: <AdminArticle /> },
         { path: "/admin/category", element: <AdminCategory /> },
+        { path: "/admin/category/:id", element: <AdminCategoryDetail /> },
         { path: "/admin/profile", element: <AdminProfile /> },
         { path: "/admin/notification", element: <AdminNotification /> },
         { path: "/admin/reset-password", element: <AdminResetPassword /> },
