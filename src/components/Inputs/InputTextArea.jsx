@@ -10,11 +10,12 @@ const InputTextArea = ({
   disabled,
   label,
   require,
-  type,
+  rows,
+  maxLength,
   ...props
 }) => {
   return (
-    <div className="flex flex-col flex-1 relative">
+    <div className="flex flex-col flex-1 relative max-w-full">
       {label && (
         <div className="text-b1 text-brown-16b!">
           {label} {require && <span className="text-red">*</span>}
@@ -22,13 +23,14 @@ const InputTextArea = ({
       )}
       <Textarea
         {...props}
-        type={type}
+        maxLength={maxLength}
+        rows={rows}
         placeholder={placeholder}
         value={value ?? ""}
         onChange={onChange}
         disabled={disabled}
         className={cx(
-          "bg-white! border rounded-md px-3 py-2",
+          "bg-white! border rounded-md px-3 py-2 h-36 ",
           errors
             ? "border-red! text-red! placeholder-red!"
             : "border-gray-300 text-black placeholder-gray-400"
