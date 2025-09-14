@@ -1,5 +1,4 @@
 import NavAndFooter from "@/components/MainLayouts/NavAndFooter";
-import { blogPosts } from "@/util/data/blogPosts";
 import moment from "moment";
 import React from "react";
 import { useState } from "react";
@@ -8,21 +7,33 @@ import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import ArticleProfileWidget from "@/components/widgets/ArticleProfileWidget";
 import LikeAndCommentWidget from "@/components/widgets/LikeAndCommentWidget";
+import { userService } from "@/apiServices";
 
 const ArticleDetail = () => {
   const { id } = useParams();
-  const [_data, _setData] = useState([]);
+  const [_data, _setData] = useState();
+  const [_isBgLoading, _setIsBgLoading] = useState(true);
 
-  // สร้างเผื่อ fetch จริง
+  const _fetchBlogData = async () => {
+    _setIsBgLoading(true);
+    try {
+      const res = await userService.GET_ARTICLE_BY_ID(id);
+      console.log("res", res);
+      if (res.status === 200) {
+        _setData(res.data[0]);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      _setIsBgLoading(false);
+    }
+  };
 
   useEffect(() => {
     _fetchBlogData();
   }, [id]);
 
-  const _fetchBlogData = () => {
-    const res = blogPosts.find((item) => String(item.id) === String(id));
-    _setData(res);
-  };
+  console.log("data", _data);
 
   return (
     <NavAndFooter>
@@ -41,14 +52,16 @@ const ArticleDetail = () => {
             {/* Main Content - 8 columns */}
             <div className="w-full lg:col-span-8">
               <div className="flex gap-x-4 items-center mb-4">
-                <div className="tag">{_data?.category}</div>
+                <div className="tag">{_data?.category?.name}</div>
                 <div className="text-b2 text-brown-16b! font-medium!">
-                  {moment(_data?.date).format("DD MMMM YYYY")}
+                  {moment(_data?.createdAt).format("DD MMMM YYYY")}
                 </div>
               </div>
-              <h2 className="text-h2 text-brown-31e! mb-8">{_data?.title}</h2>
+              <h2 className=" text-h3 md:text-h2 text-brown-31e! mb-8 ">
+                {_data?.title}
+              </h2>
               <p className="text-b1 text-brown-16b! leading-relaxed">
-                {_data?.description}
+                {_data?.subtitle}
               </p>
               <div className="prose max-w-none space-y-6 mb-6 lg:mb-12">
                 <div className="markdown">
@@ -72,7 +85,7 @@ const ArticleDetail = () => {
                 </div>
               </div>
               <div className="flex lg:hidden mb-10 ">
-                <ArticleProfileWidget data={_data} />
+                <ArticleProfileWidget data={_data?.author} />
               </div>
               <div className="mb-6 md:mb-12">
                 <LikeAndCommentWidget data={_data} />
@@ -80,7 +93,7 @@ const ArticleDetail = () => {
             </div>
             <div className=" lg:col-span-4 ">
               <div className="hidden lg:grid sticky top-5 z-10">
-                <ArticleProfileWidget data={_data} />
+                <ArticleProfileWidget data={_data?.author} />
               </div>
             </div>
           </div>

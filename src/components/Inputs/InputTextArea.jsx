@@ -10,8 +10,8 @@ const InputTextArea = ({
   disabled,
   label,
   require,
-  rows,
   maxLength,
+  height = "144px",
   ...props
 }) => {
   return (
@@ -24,13 +24,13 @@ const InputTextArea = ({
       <Textarea
         {...props}
         maxLength={maxLength}
-        rows={rows}
         placeholder={placeholder}
         value={value ?? ""}
         onChange={onChange}
         disabled={disabled}
+        style={{ height }}
         className={cx(
-          "bg-white! border rounded-md px-3 py-2 h-36 ",
+          `bg-white! border rounded-md px-3 py-2  `,
           errors
             ? "border-red! text-red! placeholder-red!"
             : "border-gray-300 text-black placeholder-gray-400"

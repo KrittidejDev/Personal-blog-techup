@@ -1,6 +1,7 @@
 import React from "react";
 
-const HeaderWidget = () => {
+const HeaderWidget = ({ data }) => {
+  console.log("home data", data);
   return (
     <div className="container box-border py-[60px] flex items-center justify-center md:gap-x-5 lg:gap-x-[60px] gap-y-10 flex-wrap ">
       <div className="cal-3-card md:max-w-1">
@@ -13,22 +14,16 @@ const HeaderWidget = () => {
         </p>
       </div>
       <img
-        src="/images/header-img-1.png"
+        src={data.avatar.url ? data.avatar.url : "/images/header-img-1.png"}
         alt=""
-        className="cal-3-card md:min-w-1/3! md:max-w-1/3"
+        className="cal-3-card w-[386px] h-[529px] md:min-w-1/3! md:max-w-1/3 rounded-2xl object-center object-cover scal"
       />
       <div className="cal-3-card md:max-w-1/3">
         <div className="auther text-b3 text-brown-16b mb-1 ">-Author</div>
-        <h3 className="title text-h3 mb-3">Krittidej J.</h3>
-        <p className="text-b1 mb-4">
-          I am a pet enthusiast and freelance writer who specializes in animal
-          behavior and care. With a deep love for cats, I enjoy sharing insights
-          on feline companionship and wellness.
-        </p>
-        <p className="text-b1 mb-4">
-          When i’m not writing, I spends time volunteering at my local animal
-          shelter, helping cats find loving homes.
-        </p>
+        <h3 className="title text-h3 mb-3  max-w-[15ch] overflow-hidden whitespace-nowrap text-ellipsis">
+          {data?.name}
+        </h3>
+        <p className="text-b1 mb-4 whitespace-pre-wrap ">{data.bio}</p>
       </div>
     </div>
   );

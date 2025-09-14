@@ -19,8 +19,8 @@ const AdminProfileForm = forwardRef(({ onSubmit, initialData = {} }, ref) => {
     email: yup
       .string()
       .email("Invalid email format")
-      .required("Email is required")
-      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"),
+      .required("Email is required"),
+    bio: yup.string().max(300, "Bio must be at most 300 characters"),
   });
 
   const {
@@ -47,16 +47,10 @@ const AdminProfileForm = forwardRef(({ onSubmit, initialData = {} }, ref) => {
       username: initialData?.username || "",
       email: initialData?.email || "",
       bio: initialData?.bio || "",
-      avatar: initialData?.avatar || "",
+      avatar: initialData?.avatar?.url || "",
     });
-    _setImage(initialData?.avatar || null);
+    _setImage(initialData?.avatar?.url || null);
   }, [initialData, reset]);
-
-  useEffect(() => {
-    if (initialData?.avatar) {
-      _setImage(initialData.avatar);
-    }
-  }, [initialData?.avatar]);
 
   const _handleFileChange = (file) => {
     _setImage(file);
@@ -68,7 +62,7 @@ const AdminProfileForm = forwardRef(({ onSubmit, initialData = {} }, ref) => {
         onSubmit({
           ...initialData,
           ...formData,
-          avatar: _image,
+          avatar: typeof _image === "string" ? { url: _image } : _image,
         });
       })();
     },
@@ -146,10 +140,11 @@ const AdminProfileForm = forwardRef(({ onSubmit, initialData = {} }, ref) => {
           render={({ field }) => (
             <InputTextArea
               {...field}
-              label="Bio (max 120 letters)"
+              label="Bio (max 300 letters)"
               errors={errors.bio?.message}
               className="w-full"
-              maxLength={120}
+              maxLength={300}
+              style={{ whiteSpace: "pre-wrap" }}
             />
           )}
         />

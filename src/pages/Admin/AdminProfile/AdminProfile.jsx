@@ -21,12 +21,13 @@ const AdminProfile = () => {
   const _fetchMyProfile = async () => {
     try {
       const res = await userService.GET_MY_PROFILE();
+      console.log("res profile", res);
       if (res.status === 200) {
-        _setData(res._doc);
-        _setIsBgLoading(false);
+        _setData(res);
       }
     } catch (error) {
       console.error(error);
+    } finally {
       _setIsBgLoading(false);
     }
   };
@@ -38,31 +39,38 @@ const AdminProfile = () => {
   const _handleSubmit = async (data) => {
     _setIsBgLoading(true);
     try {
-      let avatarUrl = data.avatar;
+      let avatarObj = data.avatar;
+
       if (data.avatar instanceof File) {
+        if (_data?.avatar?.public_id) {
+          await userService.DELETE_FILE({ public_id: _data.avatar.public_id });
+        }
         const formData = new FormData();
         formData.append("file", data.avatar);
         const uploadRes = await userService.POST_FILE_UPLOAD(formData);
-        if (uploadRes.url) {
-          avatarUrl = uploadRes.url;
+        if (uploadRes.url && uploadRes.public_id) {
+          avatarObj = {
+            url: uploadRes.url,
+            public_id: uploadRes.public_id,
+          };
         }
       }
 
       const profileRes = await userService.PUT_UPDATE_PROFILE(_data._id, {
         ...data,
-        avatar: avatarUrl,
+        avatar: avatarObj,
       });
 
       if (profileRes.status === 200) {
         toast.success("Profile updated successfully!");
         _setData(profileRes.user);
         localStorage.setItem("user", JSON.stringify(profileRes.user));
-        _setIsBgLoading(false);
         _fetchMyProfile();
       }
     } catch (error) {
       console.error(error);
       toast.error("Update failed.");
+    } finally {
       _setIsBgLoading(false);
     }
   };
