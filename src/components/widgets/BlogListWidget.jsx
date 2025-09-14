@@ -16,12 +16,13 @@ const BlogListWidget = ({ isViewMore }) => {
   const [_status, _setStatus] = useState("Publish");
   const [_category, _setCategory] = useState();
   const [_paginationData, _setPaginationData] = useState();
+  const [_dataSearch, _setDataSearch] = useState();
 
   const _fetchArticle = async () => {
     _setIsBgLoading(true);
     try {
       const query = new URLSearchParams();
-      if (_search) query.append("search", _search);
+      // if (_search) query.append("search", _search);
       if (_page) query.append("page", _page);
       if (_status) query.append("status", _status);
       if (_category) query.append("category", _category);
@@ -45,7 +46,7 @@ const BlogListWidget = ({ isViewMore }) => {
 
   useEffect(() => {
     _fetchArticle();
-  }, [_search, _page, _status, _category]);
+  }, [_page, _status, _category]);
 
   const _handleClickCard = (id) => {
     router(`/article/${id}`);
@@ -59,9 +60,35 @@ const BlogListWidget = ({ isViewMore }) => {
     _setPage(newPage);
   };
 
+  const _fetchSuggestion = async () => {
+    try {
+      if (_search) {
+        const res = await userService.GET_ARTICLE(`?search=${_search}`);
+        console.log("res sear", res);
+        if (res.status === 200) {
+          _setDataSearch(res.data[0]);
+        }
+      } else {
+        _setDataSearch(null);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    _fetchSuggestion();
+  }, [_search]);
+
   return (
     <div className="container ">
-      <FilterBarWidget />
+      <FilterBarWidget
+        onCategorySelect={(e) => _setCategory(e)}
+        onSearch={(e) => {
+          _setSearch(e);
+        }}
+        dataSearch={_dataSearch}
+      />
       {_isBgLoading ? (
         <BgLoading />
       ) : (
