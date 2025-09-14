@@ -88,7 +88,7 @@ const ArticleDetail = () => {
                 <ArticleProfileWidget data={_data?.author} />
               </div>
               <div className="mb-6 md:mb-12">
-                <LikeAndCommentWidget data={_data} />
+                {/* <LikeAndCommentWidget data={_data} /> */}
               </div>
             </div>
             <div className=" lg:col-span-4 ">
