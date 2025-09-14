@@ -31,7 +31,7 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
   };
 
   const btnProfileStyle =
-    "flex items-center gap-x-2.5 py-3 px-4 w-full cursor-pointer hover:shadow-lg hover:bg-brown-6d1 text-left text-b1 hover:scale-105 transition";
+    "flex items-center gap-x-2.5 py-3 px-4 w-full text-brown-03b! cursor-pointer hover:shadow-lg hover:bg-brown-6d1 text-left text-b1 hover:scale-105 transition";
 
   return (
     <div className={`${className} relative`} ref={dropdownRef}>
@@ -39,12 +39,16 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
         <Avatar className={"w-12 h-12"}>
           <AvatarImage
             src={
-              data?.avatar || `https://i.pravatar.cc/150?u=${data?.username}`
+              data?.avatar?.url ||
+              `https://i.pravatar.cc/150?u=${data?.username}`
             }
           />
         </Avatar>
-        <div className="flex flex-nowrap items-center gap-x-1.5 text-b1">
-          {data?.name} <IoIosArrowDown className="size-4 text-brown-16b" />
+        <div className="flex flex-nowrap items-center gap-x-1.5 text-b1 text-brown-03b!">
+          <span className=" max-w-[10ch] overflow-hidden whitespace-nowrap text-ellipsis">
+            {data?.name}
+          </span>
+          <IoIosArrowDown className="size-4 text-brown-16b" />
         </div>
       </div>
       {_isOpen && (

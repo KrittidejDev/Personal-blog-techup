@@ -12,6 +12,7 @@ import AdminProfile from "@/pages/Admin/AdminProfile/AdminProfile";
 import AdminNotification from "@/pages/Admin/AdminNotification/AdminNotification";
 import AdminResetPassword from "@/pages/Admin/AdminResetPassword/AdminResetPassword";
 import AdminCategoryDetail from "@/pages/Admin/AdminCategory/AdminCategoryDetail";
+import AdminArticleDetail from "@/pages/Admin/AdminArticle/AdminArticleDetail";
 
 export default function AppRoutes() {
   return useRoutes([
@@ -26,6 +27,7 @@ export default function AppRoutes() {
       element: <RoleRoute roles={["admin"]} />,
       children: [
         { path: "/admin/article", element: <AdminArticle /> },
+        { path: "/admin/article/:id", element: <AdminArticleDetail /> },
         { path: "/admin/category", element: <AdminCategory /> },
         { path: "/admin/category/:id", element: <AdminCategoryDetail /> },
         { path: "/admin/profile", element: <AdminProfile /> },

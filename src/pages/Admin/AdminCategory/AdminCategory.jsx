@@ -23,15 +23,14 @@ const AdminCategory = () => {
 
   const _fetchCategory = async () => {
     _setIsBgLoading(true);
-    let queryString = "?";
+    // let queryString = "?";
     try {
-      if (_search && _page) {
-        queryString = queryString + `search=${_search}&page=${_page}`;
-      } else if (_search) {
-        queryString = queryString + `search=${_search}&page=1`;
-      } else if (_page) {
-        queryString = queryString + `page=${_page}`;
-      }
+      const query = new URLSearchParams();
+
+      if (_search) query.append("search", _search);
+      if (_page) query.append("page", _page);
+      const queryString = query.toString() ? `?${query.toString()}` : "";
+
       const res = await userService.GET_CATEGORY(queryString);
       if (res.status === 200) {
         _setPaginationData({
@@ -124,20 +123,20 @@ const AdminCategory = () => {
       btnSaveLabel="Create category"
       onSave={() => _handleCreate("create")}
     >
+      <div className="flex items-center justify-between mb-4">
+        <div className="max-w-[360px]">
+          <InputSearch
+            placeholder="Search"
+            iconLeft
+            handleSearch={_handleSearch}
+            value={_search || ""}
+          />
+        </div>
+      </div>
       {_isBgLoading ? (
         <BgLoading />
       ) : (
         <>
-          <div className="flex items-center justify-between mb-4">
-            <div className="max-w-[360px]">
-              <InputSearch
-                placeholder="Search"
-                iconLeft
-                handleSearch={_handleSearch}
-                value={_search || ""}
-              />
-            </div>
-          </div>
           <TableStandard data={_data} columns={columns} actions={actions} />
           <Pagination
             totalItems={_paginationData.total}

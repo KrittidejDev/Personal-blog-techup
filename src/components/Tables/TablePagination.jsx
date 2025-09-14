@@ -43,10 +43,10 @@ export const Pagination = ({
   const visiblePages = getVisiblePages();
 
   return (
-    <div className="bg-white px-4 py-3 border-t border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+    <div className=" px-4 py-3  flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
       {/* Left side: info */}
       {showPageInfo && (
-        <div className="text-sm text-gray-700">
+        <div className="text-sm text-brown-16b ">
           Showing {startItem} to {endItem} of {totalItems} entries
         </div>
       )}
@@ -56,7 +56,7 @@ export const Pagination = ({
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-2 py-1 text-gray-500 hover:text-gray-700 disabled:text-gray-300 disabled:cursor-not-allowed transition-colors rounded"
+          className="px-2 py-1  text-brown-16b hover:text-brown-03b cursor-pointer disabled:text-gray-300 disabled:cursor-not-allowed transition-colors rounded"
         >
           <ChevronLeft size={18} />
         </button>
@@ -66,11 +66,11 @@ export const Pagination = ({
             key={index}
             onClick={() => typeof page === "number" && handlePageChange(page)}
             disabled={typeof page !== "number"}
-            className={`px-3 py-1 text-sm rounded-md transition-colors ${
+            className={`px-3 py-1 text-sm rounded-md transition-colors cursor-pointer ${
               page === currentPage
-                ? "bg-blue-600 text-white"
+                ? "bg-brown-16b text-white"
                 : typeof page === "number"
-                ? "text-gray-700 hover:bg-gray-100"
+                ? "text-brown-16b hover:bg-gray-100"
                 : "text-gray-400 cursor-default"
             }`}
           >
@@ -81,7 +81,7 @@ export const Pagination = ({
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-2 py-1 text-gray-500 hover:text-gray-700 disabled:text-gray-300 disabled:cursor-not-allowed transition-colors rounded"
+          className="px-2 py-1 text-brown-16b hover:text-brown-03b disabled:text-gray-300 disabled:cursor-not-allowed transition-colors rounded cursor-pointer"
         >
           <ChevronRight size={18} />
         </button>

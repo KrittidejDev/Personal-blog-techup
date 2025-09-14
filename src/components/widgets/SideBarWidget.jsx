@@ -53,6 +53,9 @@ const SideBarWidget = ({ collapsed, setCollapsed }) => {
   const location = useLocation().pathname;
   const { logout } = useAuth();
 
+  const pathParts = location.split("/").filter(Boolean);
+  const activePath = "/" + pathParts.slice(0, 2).join("/");
+
   return (
     <div
       className={`fixed top-0 left-0 bottom-0 bg-brown-eeb py-4 box-border flex flex-col  h-screen z-50  transition-all! duration-300! ${
@@ -99,14 +102,14 @@ const SideBarWidget = ({ collapsed, setCollapsed }) => {
                     href={item.url}
                     className={` flex items-center gap-3 p-6 font-medium  transition-colors
                           ${
-                            location === item.url
+                            activePath === item.url
                               ? "bg-brown-6d1 text-brown-03b"
                               : "text-brown-16b hover:bg-brown-6d1/30 hover:text-brown-03b"
                           }
                         `}
                   >
                     <item.icon
-                      color={location === item.url ? "#26231E" : "#75716B"}
+                      color={activePath === item.url ? "#26231E" : "#75716B"}
                     />
                     {!collapsed && <span>{item.title}</span>}
                   </a>
@@ -122,7 +125,7 @@ const SideBarWidget = ({ collapsed, setCollapsed }) => {
             href={"/"}
             className={` flex items-center gap-3 p-6 font-medium  transition-colors
                           ${
-                            location === "/"
+                            activePath === "/"
                               ? "bg-brown-6d1 text-brown-03b"
                               : "text-brown-16b hover:bg-brown-6d1/30 hover:text-brown-03b"
                           }

@@ -1,56 +1,163 @@
+import { userService } from "@/apiServices";
 import AdminFilterBar from "@/components/Displays/AdminFilterBar";
+import { BgLoading } from "@/components/Displays/BgLoading";
+import ModalEmpty from "@/components/Displays/ModalEmpty";
 import AddIcon from "@/components/Icons/AddIcon";
 import BellIcon from "@/components/Icons/BellIcon";
+import PenEdit from "@/components/Icons/PenEdit";
+import TrashDelete from "@/components/Icons/TrashDelete";
 import { InputDropdown } from "@/components/Inputs/InputDropdown";
 import InputSearch from "@/components/Inputs/InputSearch";
 import AdminMainLayOut from "@/components/MainLayouts/AdminMainLayOut";
 import { Pagination } from "@/components/Tables/TablePagination";
 import { TableStandard } from "@/components/Tables/TablesStandard";
+import { Button } from "@/components/ui/button";
 import AdminNavbarWidget from "@/components/widgets/AdminNavbarWidget";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AdminArticle = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const router = useNavigate();
+  const [_isBgLoading, _setIsBgLoading] = useState(true);
+  const [_data, _setData] = useState([]);
+  const [_paginationData, _setPaginationData] = useState({});
+  const [_search, _setSearch] = useState();
+  const [_page, _setPage] = useState();
+  const [_renderModal, _setRenderModal] = useState(null);
+  const [_dataCategory, _setDataCategory] = useState();
+  const [_category, _setCategory] = useState();
+  const [_status, _setStatus] = useState();
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
+  const _fetchArticle = async () => {
+    _setIsBgLoading(true);
+    try {
+      const query = new URLSearchParams();
+      if (_search) query.append("search", _search);
+      if (_page) query.append("page", _page);
+      if (_status) query.append("status", _status);
+      if (_category) query.append("category", _category);
+      const queryString = query.toString() ? `?${query.toString()}` : "";
+      const res = await userService.GET_ARTICLE(queryString);
+      if (res.status === 200) {
+        _setPaginationData({
+          page: res.page,
+          total: res.total,
+          totalPages: res.totalPages,
+        });
+        _setData(res.data[0]);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Fetch categories failed");
+    } finally {
+      _setIsBgLoading(false);
+    }
+  };
 
-  // const handleEdit = (article) => {
-  //   console.log("Edit article:", article);
-  // };
+  useEffect(() => {
+    _fetchArticle();
+  }, [_search, _page, _status, _category]);
 
-  // const handleDelete = (article) => {
-  //   console.log("Delete article:", article);
-  // };
+  const _fetchCategory = async () => {
+    _setIsBgLoading(true);
+    try {
+      const res = await userService.GET_CATEGORY();
+      if (res.status === 200) {
+        _setDataCategory(res.categories);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Fetch categories failed");
+    } finally {
+      _setIsBgLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    _fetchCategory();
+  }, []);
+
+  const _handleCreate = (id) => {
+    router(`/admin/article/${id}`);
+  };
+
+  const _handleDelete = async (id) => {
+    _setIsBgLoading(true);
+    try {
+      const res = await userService.DELETE_ARTICLE(id);
+      if (res.status === 200) {
+        toast.success("Article deleted successfully");
+        _fetchArticle();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Delete article failed");
+      _setIsBgLoading(false);
+    }
+  };
+
+  const _handleSearch = (value) => {
+    _setSearch(value);
+  };
+
+  const _handlePageChange = (newPage) => {
+    _setPage(newPage);
+  };
 
   const actions = [
     {
       title: "Edit",
-      icon: <BellIcon />,
-      onClick: (row) => {
-        console.log("Edit", row);
-      },
+      icon: <PenEdit />,
+      onClick: (row) => _handleCreate(row._id),
     },
     {
       title: "Delete",
-      icon: <BellIcon />,
+      icon: <TrashDelete />,
       onClick: (row) => {
-        console.log("Delete", row);
+        _setRenderModal(
+          <div className="flex flex-col items-center pt-10 pb-5 w-[477px]">
+            <div className="text-h3 text-brown-31e! mb-6">Delete article</div>
+            <div className="text-b1 text-brown-16b mb-6">
+              Do you want to delete this article?
+            </div>
+            <div className="flex justify-center items-center gap-x-2">
+              <Button className={"btn-border-16b"} onClick={_handleCloseModal}>
+                Cancel
+              </Button>
+              <Button
+                className={"btn-31e"}
+                onClick={() => _handleDelete(row._id)}
+              >
+                Delete
+              </Button>
+            </div>
+          </div>
+        );
       },
     },
   ];
+
+  const _handleCloseModal = () => {
+    _setRenderModal(false);
+  };
 
   return (
     <AdminMainLayOut
       isAdd
       title={"Article management"}
       btnSaveLabel={"Create article"}
+      onSave={() => _handleCreate("create")}
     >
       <div className="flex items-center justify-between mb-4">
         <div className="max-w-[360px]">
-          <InputSearch placeholder={"search"} iconLeft />
+          <InputSearch
+            placeholder={"search"}
+            iconLeft
+            handleSearch={_handleSearch}
+          />
         </div>
         <div className="flex items-center gap-x-4">
           <div className="w-[200px]">
@@ -58,131 +165,66 @@ const AdminArticle = () => {
               isAdmin
               placeholder={"status"}
               options={[
-                { value: "1", label: "Drafted" },
-                { value: "2", label: "Published" },
+                { value: "Draft", label: "Draft" },
+                { value: "Publish", label: "Published" },
               ]}
               onChange={(e) => {
-                console.log("drop click", e);
+                _setStatus(e);
               }}
             />
           </div>
           <div className="w-[200px]">
             <InputDropdown
               isAdmin
-              placeholder={"status"}
-              options={[
-                { value: "1", label: "Drafted" },
-                { value: "2", label: "Published" },
-              ]}
+              placeholder={"Category"}
+              options={_dataCategory?.map((e) => ({
+                value: e._id,
+                label: e.name,
+              }))}
               onChange={(e) => {
-                console.log("drop click", e);
+                _setCategory(e);
               }}
             />
           </div>
         </div>
       </div>
-      <TableStandard data={paginatedData} columns={columns} actions={actions} />
-      <Pagination
-        totalItems={data.length}
-        initialItemsPerPage={itemsPerPage}
-        onPageChange={(page) => setCurrentPage(page)}
-        onItemsPerPageChange={(perPage) => setItemsPerPage(perPage)}
-      />
+      {_isBgLoading ? (
+        <BgLoading />
+      ) : (
+        <>
+          <TableStandard data={_data} columns={columns} actions={actions} />
+          <Pagination
+            totalItems={_paginationData.total}
+            currentPage={_paginationData.page}
+            totalPages={_paginationData.totalPages}
+            onPageChange={_handlePageChange}
+          />
+        </>
+      )}
+      <ModalEmpty
+        isCloseBtn
+        isShowModal={_renderModal ? true : false}
+        onClose={_handleCloseModal}
+      >
+        {_renderModal}
+      </ModalEmpty>
     </AdminMainLayOut>
   );
 };
-
-const data = [
-  {
-    id: 1,
-    title: "The Fascinating World of Cats: Why We Love Our Furry Friends",
-    category: "Cat",
-    status: "Draft",
-  },
-  {
-    id: 2,
-    title:
-      "Understanding Cat Behavior: Why Your Feline Friend Acts the Way They Do",
-    category: "Cat",
-    status: "Published",
-  },
-  {
-    id: 3,
-    title: "Finding Motivation: How to Stay Inspired Through Life's Challenges",
-    category: "General",
-    status: "Published",
-  },
-  {
-    id: 4,
-    title:
-      "The Science of the Cat's Purr: How It Benefits Cats and Humans Alike",
-    category: "Cat",
-    status: "Published",
-  },
-  {
-    id: 5,
-    title: "Top 10 Health Tips to Keep Your Cat Happy and Healthy",
-    category: "Cat",
-    status: "Published",
-  },
-  {
-    id: 6,
-    title: "Unlocking Creativity: Simple Habits to Spark Inspiration Daily",
-    category: "Inspiration",
-    status: "Published",
-  },
-  {
-    id: 7,
-    title: "Cat Training 101: Teaching Your Feline New Tricks",
-    category: "Cat",
-    status: "Draft",
-  },
-  {
-    id: 8,
-    title: "The Psychology of Success: Building Mental Resilience",
-    category: "General",
-    status: "Published",
-  },
-  {
-    id: 9,
-    title: "Indoor Plants That Are Safe for Cats",
-    category: "Cat",
-    status: "Published",
-  },
-  {
-    id: 10,
-    title: "Digital Detox: Finding Balance in a Connected World",
-    category: "General",
-    status: "Draft",
-  },
-  {
-    id: 11,
-    title: "Cat Nutrition: What Every Owner Should Know",
-    category: "Cat",
-    status: "Published",
-  },
-  {
-    id: 12,
-    title: "The Art of Mindfulness in Daily Life",
-    category: "Inspiration",
-    status: "Published",
-  },
-];
 
 const columns = [
   {
     key: "title",
     header: "Article Title",
     render: (value) => (
-      <div className="text-sm font-medium text-gray-900 leading-5 max-w-md">
-        {value}
-      </div>
+      <div className="max-w-[50lvw] flex-1 overflow-clip">{value}</div>
     ),
   },
   {
     key: "category",
     header: "Category",
-    render: (value) => <span className="text-sm text-gray-700">{value}</span>,
+    render: (value) => <div>{value?.name}</div>,
+    width: "120px",
   },
   {
     key: "status",
@@ -192,6 +234,7 @@ const columns = [
         {value} {/* <StatusBadge status={value} /> */}{" "}
       </div>
     ),
+    width: "120px",
   },
 ];
 

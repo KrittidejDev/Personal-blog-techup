@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import cx from "classnames";
 import AdminProfile from "../Icons/AdminProfile";
 import { useEffect } from "react";
+import Image from "../Icons/Image";
 
 const InputFileUpload = ({
   initialPreview,
@@ -9,6 +10,7 @@ const InputFileUpload = ({
   disabled,
   label,
   require,
+  isArticle,
   ...props
 }) => {
   const [preview, setPreview] = useState(initialPreview);
@@ -31,18 +33,41 @@ const InputFileUpload = ({
   };
 
   return (
-    <div className="flex  items-center gap-x-7 relative">
-      {preview ? (
-        <img
-          src={preview}
-          alt="preview"
-          className="size-[120px] object-cover rounded-full border shadow-md"
-        />
-      ) : (
-        <div className="size-[120px] rounded-full bg-brown-6d1 flex justify-center items-center">
-          <AdminProfile width="60" height="60" />
-        </div>
-      )}
+    <div
+      className={`flex gap-x-7 relative ${
+        isArticle ? "items-end " : "items-center"
+      }`}
+    >
+      <div>
+        {isArticle && (
+          <div className="text-b1 text-brown-16b! mb-4">Thumbnail image</div>
+        )}
+        {preview ? (
+          <img
+            src={preview}
+            alt="preview"
+            className={` object-cover  border shadow-md overflow-hidden ${
+              isArticle
+                ? "w-[480px] h-[260px] rounded-2xl"
+                : "size-[120px] rounded-full"
+            }`}
+          />
+        ) : (
+          <div
+            className={` flex items-center justify-center object-cover  border shadow-md overflow-hidden ${
+              isArticle
+                ? "w-[480px] h-[260px] rounded-2xl"
+                : "size-[120px] rounded-full"
+            }`}
+          >
+            {isArticle ? (
+              <Image width="60" height="60" />
+            ) : (
+              <AdminProfile width="60" height="60" />
+            )}
+          </div>
+        )}
+      </div>
 
       <input
         {...props}
