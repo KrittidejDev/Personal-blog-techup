@@ -35,7 +35,7 @@ const NavbarWidget = () => {
             <SignInWidget />
           )}
         </div>
-        <div>
+        <div className=" flex md:hidden">
           <Hamberger width="24" height="24" />
         </div>
       </div>
