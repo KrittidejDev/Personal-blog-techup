@@ -21,7 +21,6 @@ const AdminProfile = () => {
   const _fetchMyProfile = async () => {
     try {
       const res = await userService.GET_MY_PROFILE();
-      console.log("res profile", res);
       if (res.status === 200) {
         _setData(res);
       }

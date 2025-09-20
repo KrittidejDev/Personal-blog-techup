@@ -61,10 +61,28 @@ export const userService = {
     return apiService.delete(`${apiPath}/blogs/${id}`);
   },
 
-  // notification
+  // comment  comments
+  POST_CREATE_COMMENTS: (params) => {
+    return apiService.post(`${apiPath}/comments`, params);
+  },
 
-  GET_NOTIFICATION: () => {
-    return apiService.get(`${apiPath}/notification`);
+  // like
+  GET_LIKE: (id) => {
+    return apiService.get(`${apiPath}/likes/${id}`);
+  },
+  POST_LIKE: (id, params) => {
+    return apiService.post(`${apiPath}/likes/like/${id}`, params);
+  },
+  DELETE_UNLIKE: (id) => {
+    return apiService.delete(`${apiPath}/likes/unlike/${id}`);
+  },
+
+  // notification
+  GET_NOTIFICATION: (params) => {
+    return apiService.get(`${apiPath}/notification${params}`);
+  },
+  PUT_NOTIFICATION_READ: (id) => {
+    return apiService.put(`${apiPath}/notification/${id}/handle`);
   },
 
   // file upload

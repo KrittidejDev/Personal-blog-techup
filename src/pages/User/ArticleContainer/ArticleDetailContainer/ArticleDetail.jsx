@@ -9,17 +9,26 @@ import ArticleProfileWidget from "@/components/widgets/ArticleProfileWidget";
 import LikeAndCommentWidget from "@/components/widgets/LikeAndCommentWidget";
 import { userService } from "@/apiServices";
 import { BgLoading } from "@/components/Displays/BgLoading";
+import { useAuth } from "@/context/AuthContext";
+import ModalEmpty from "@/components/Displays/ModalEmpty";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ArticleDetail = () => {
+  const { user } = useAuth();
+  const userId = user?._id || null;
   const { id } = useParams();
+  const router = useNavigate();
   const [_data, _setData] = useState();
   const [_isBgLoading, _setIsBgLoading] = useState(true);
+  const [_showModal, _setIsShowModal] = useState(false);
+  const [_likeData, _setLikeData] = useState();
 
   const _fetchBlogData = async () => {
     _setIsBgLoading(true);
     try {
       const res = await userService.GET_ARTICLE_BY_ID(id);
-      console.log("res", res);
       if (res.status === 200) {
         _setData(res.data[0]);
       }
@@ -34,7 +43,54 @@ const ArticleDetail = () => {
     _fetchBlogData();
   }, [id]);
 
-  console.log("data", _data);
+  const _handleComment = async (data) => {
+    _setIsBgLoading(true);
+    try {
+      if (!userId) {
+        _setIsShowModal(true);
+      } else {
+        let params = {
+          blog: id,
+          content: data.comment,
+        };
+        let res = await userService.POST_CREATE_COMMENTS(params);
+        if (res.status === 201) {
+          toast.success("Comment success");
+          _fetchBlogData(id);
+        }
+      }
+    } catch (error) {
+      error.log(error);
+    } finally {
+      _setIsBgLoading(false);
+    }
+  };
+
+  const _handleCloseModal = () => {
+    _setIsShowModal(false);
+  };
+
+  const _handleLikes = async () => {
+    try {
+      const myLike = _data.likes.find((like) => like.user._id === userId);
+      let res;
+      if (myLike) {
+        res = await userService.DELETE_UNLIKE(id);
+        if (res.status === 200) {
+          toast.info("You unliked this blog");
+        }
+      } else {
+        res = await userService.POST_LIKE(id);
+        if (res.status === 200) {
+          toast.success("You liked this blog");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await _fetchBlogData();
+    }
+  };
 
   return (
     <NavAndFooter>
@@ -93,7 +149,11 @@ const ArticleDetail = () => {
                     <ArticleProfileWidget data={_data?.author} />
                   </div>
                   <div className="mb-6 md:mb-12">
-                    {/* <LikeAndCommentWidget data={_data} /> */}
+                    <LikeAndCommentWidget
+                      data={_data || []}
+                      onComment={_handleComment}
+                      onLike={_handleLikes}
+                    />
                   </div>
                 </div>
                 <div className=" lg:col-span-4 ">
@@ -106,6 +166,34 @@ const ArticleDetail = () => {
           </div>{" "}
         </>
       )}
+      <ModalEmpty
+        isShowModal={_showModal}
+        onClose={_handleCloseModal}
+        isCloseBtn
+      >
+        <div className="flex flex-col items-center">
+          <div className="w-lg p-5 text-h2 text-brown-31e! text-center mb-10">
+            Create an account to continue
+          </div>
+          <Button
+            className={"mb-10 btn-31e"}
+            onClick={() => {
+              router("/register");
+            }}
+          >
+            Create account
+          </Button>
+          <div className="flex gap-x-3 text-brown-16b ">
+            Already have an account?
+            <a
+              href="/login"
+              className="text-brown-31e underline cursor-pointer hover:text-brown-16b"
+            >
+              Log in
+            </a>
+          </div>
+        </div>
+      </ModalEmpty>
     </NavAndFooter>
   );
 };

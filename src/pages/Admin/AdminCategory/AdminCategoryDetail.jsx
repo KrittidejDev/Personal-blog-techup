@@ -24,7 +24,6 @@ const AdminCategoryDetail = () => {
     try {
       if (id !== "create") {
         let res = await userService.GET_CATEGORY_BY_ID(id);
-        console.log("res", res);
         if (res.status === 200) {
           _setData(res.data[0]);
         }

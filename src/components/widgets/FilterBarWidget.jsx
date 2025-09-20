@@ -30,7 +30,6 @@ const FilterBarWidget = ({ onCategorySelect, onSearch, dataSearch }) => {
   const _fetchCategory = async () => {
     try {
       const res = await userService.GET_CATEGORY();
-      console.log("res cat", res);
       if (res.status === 200) {
         const categories = [{ _id: "all", name: "All" }, ...res.categories];
         _setDataCategory(categories);
@@ -43,8 +42,6 @@ const FilterBarWidget = ({ onCategorySelect, onSearch, dataSearch }) => {
   useEffect(() => {
     _fetchCategory();
   }, []);
-
-  console.log("datasearch", dataSearch);
 
   return (
     <div className="container ">

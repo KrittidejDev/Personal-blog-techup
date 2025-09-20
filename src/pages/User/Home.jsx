@@ -13,7 +13,6 @@ const Home = () => {
   const _fetchHeaderData = async () => {
     try {
       const res = await userService.GET_ADMIN_PUBLIC();
-      console.log("res admin", res);
       if (res.status === 200) {
         _setData(res.admin);
       }
