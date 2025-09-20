@@ -28,7 +28,6 @@ const BlogListWidget = ({ isViewMore }) => {
       if (_category) query.append("category", _category);
       const queryString = query.toString() ? `?${query.toString()}` : "";
       const res = await userService.GET_ARTICLE(queryString);
-      console.log("ARTI", res);
       if (res.status === 200) {
         _setPaginationData({
           page: res.page,
@@ -64,7 +63,6 @@ const BlogListWidget = ({ isViewMore }) => {
     try {
       if (_search) {
         const res = await userService.GET_ARTICLE(`?search=${_search}`);
-        console.log("res sear", res);
         if (res.status === 200) {
           _setDataSearch(res.data[0]);
         }
@@ -72,7 +70,7 @@ const BlogListWidget = ({ isViewMore }) => {
         _setDataSearch(null);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

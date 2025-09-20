@@ -10,18 +10,15 @@ import {
   LinkedinShareButton,
   LinkedinIcon,
 } from "react-share";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import CommentForm from "../Forms/CommentForm";
 import CommentCard from "../Cards/CommentCard";
-import { useAuth } from "@/context/AuthContext";
 import { toast } from "react-toastify";
 
-const LikeAndCommentWidget = ({ data }) => {
-  const { user } = useAuth();
-  const router = useNavigate();
+const LikeAndCommentWidget = ({ data, onComment, onLike }) => {
   const location = useLocation();
   const shareUrl = window.location.origin + location.pathname;
-  const title = data.title;
+  const title = data?.title || "";
 
   const _handleCopyLink = async () => {
     try {
@@ -32,20 +29,15 @@ const LikeAndCommentWidget = ({ data }) => {
     }
   };
 
-  const _handleSubmitComment = (data) => {
-    if (!user) {
-      router("/login");
-    } else {
-      alert(data.comment);
-    }
-  };
-
   return (
     <div>
       <div className="flex justify-between items-center flex-wrap px-6 py-4 bg-brown-eeb rounded-2xl mb-6 md:mb-12">
-        <Button className="btn-border-16b text-b1 text-brown-31e group w-full md:w-fit mb-6 md:mb-0 bg-white!  hover:bg-brown-31e!">
+        <Button
+          className="btn-border-16b text-b1 text-brown-31e group w-full md:w-fit mb-6 md:mb-0 bg-white!  hover:bg-brown-31e!"
+          onClick={() => onLike()}
+        >
           <CiFaceSmile className="text-brown-31e group-hover:text-white mb-0.5" />
-          {data.likes}
+          {data?.likesCount}
         </Button>
         <div className="flex items-center justify-center gap-x-3 w-full md:w-fit">
           <Button
@@ -82,13 +74,12 @@ const LikeAndCommentWidget = ({ data }) => {
         </div>
       </div>
       <div className="mb-6 md:mb-12">
-        <CommentForm onSubmit={_handleSubmitComment} />
+        <CommentForm onSubmit={onComment} />
       </div>
       <div className="">
-        {/* {data?.comment?.map((e) => ( */}
-        {comment?.map((e) => (
+        {data.comments?.map((e) => (
           <div
-            key={e.comment_id}
+            key={e._id}
             className="border-b-[1px] border-b-brown-6d1 last:border-none "
           >
             <CommentCard data={e} />
@@ -98,32 +89,5 @@ const LikeAndCommentWidget = ({ data }) => {
     </div>
   );
 };
-
-const comment = [
-  {
-    comment_id: 1,
-    customer_image: "",
-    customer_name: "Jacob Lash",
-    create_at: "12 September 2024 at 18:30",
-    comment:
-      "I loved this article! It really explains why my cat is so independent yet loving. The purring section was super interesting.",
-  },
-  {
-    comment_id: 2,
-    customer_image: "",
-    customer_name: "Jacob Lash",
-    create_at: "12 September 2024 at 18:30",
-    comment:
-      "I loved this article! It really explains why my cat is so independent yet loving. The purring section was super interesting.",
-  },
-  {
-    comment_id: 3,
-    customer_image: "",
-    customer_name: "Jacob Lash",
-    create_at: "12 September 2024 at 18:30",
-    comment:
-      "I loved this article! It really explains why my cat is so independent yet loving. The purring section was super interesting.",
-  },
-];
 
 export default LikeAndCommentWidget;

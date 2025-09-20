@@ -1,8 +1,6 @@
 import React from "react";
 
 const ArticleProfileWidget = ({ data }) => {
-  console.log(data);
-
   return (
     <div className="w-full box-border overflow-hidden bg-brown-eeb p-6 md:p-10 rounded-2xl shadow-lg">
       <div className="flex items-center gap-x-2 mb-5">

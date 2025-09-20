@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
     setUser(null);
     setToken(null);
-    navigate("/login");
+    navigate("/");
   };
 
   // เช็ค role

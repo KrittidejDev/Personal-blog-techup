@@ -59,20 +59,23 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
           }}
           onMouseEnter={() => clearTimeout()}
         >
-          {data?.role === "admin" && (
+          {data?.role === "admin" ? (
             <button className={btnProfileStyle} onClick={_handleClickAdmin}>
               <AdminBook />
               Dashboard
             </button>
+          ) : (
+            <>
+              <button className={btnProfileStyle}>
+                <UserIcon />
+                Profile
+              </button>
+              <button className={btnProfileStyle}>
+                <ResetPasswordIcon />
+                Reset password
+              </button>
+            </>
           )}
-          <button className={btnProfileStyle}>
-            <UserIcon />
-            Profile
-          </button>
-          <button className={btnProfileStyle}>
-            <ResetPasswordIcon />
-            Reset password
-          </button>
           <button onClick={onLogOut} className={btnProfileStyle}>
             <SignOutIcon />
             Log out

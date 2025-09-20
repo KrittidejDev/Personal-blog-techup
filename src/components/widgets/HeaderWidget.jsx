@@ -1,7 +1,6 @@
 import React from "react";
 
 const HeaderWidget = ({ data }) => {
-  console.log("home data", data);
   return (
     <div className="container box-border py-[60px] flex items-center justify-center md:gap-x-5 lg:gap-x-[60px] gap-y-10 flex-wrap ">
       <div className="cal-3-card md:max-w-1">

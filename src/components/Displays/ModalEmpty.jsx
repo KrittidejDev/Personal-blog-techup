@@ -12,10 +12,10 @@ const ModalEmpty = ({ children, isShowModal, onClose, isCloseBtn }) => {
       <div className="relative z-[60] bg-brown-8f6 p-6 rounded-2xl">
         {isCloseBtn && (
           <div
-            className="absolute top-2 right-2 cursor-pointer"
+            className="absolute top-5 right-5 cursor-pointer"
             onClick={onClose}
           >
-            <IoClose className="text-brown-16b" />
+            <IoClose className="text-brown-16b size-6" />
           </div>
         )}
         {children}
