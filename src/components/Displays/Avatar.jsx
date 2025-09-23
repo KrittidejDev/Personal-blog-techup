@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { IoIosArrowDown } from "react-icons/io";
 import UserIcon from "../Icons/UserIcon";
 import ResetPasswordIcon from "../Icons/ResetPasswordIcon";
 import SignOutIcon from "../Icons/SignOutIcon";
 import { useNavigate } from "react-router-dom";
 import AdminBook from "../Icons/AdminBook";
+import BlankAvatar from "../Icons/BlankAvatar";
 
 export const AvatarDisplay = ({ data, className, onLogOut }) => {
   const [_isOpen, _setIsOpen] = useState(false);
@@ -36,14 +36,15 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
   return (
     <div className={`${className} relative`} ref={dropdownRef}>
       <div className="flex items-center gap-x-2.5 " onClick={_handleOpen}>
-        <Avatar className={"w-12 h-12"}>
-          <AvatarImage
-            src={
-              data?.avatar?.url ||
-              `https://i.pravatar.cc/150?u=${data?.username}`
-            }
+        {data?.avatar?.url ? (
+          <img
+            src={data?.avatar?.url}
+            alt="avatar"
+            className="w-12 h-12 object-cover object-center rounded-full overflow-hidden"
           />
-        </Avatar>
+        ) : (
+          <BlankAvatar width="48" height="48" />
+        )}
         <div className="flex flex-nowrap items-center gap-x-1.5 text-b1 text-brown-03b!">
           <span className=" max-w-[10ch] overflow-hidden whitespace-nowrap text-ellipsis">
             {data?.name}
@@ -66,11 +67,23 @@ export const AvatarDisplay = ({ data, className, onLogOut }) => {
             </button>
           ) : (
             <>
-              <button className={btnProfileStyle}>
+              <button
+                className={btnProfileStyle}
+                onClick={() => {
+                  router("/me/profile");
+                  _setIsOpen(false);
+                }}
+              >
                 <UserIcon />
                 Profile
               </button>
-              <button className={btnProfileStyle}>
+              <button
+                className={btnProfileStyle}
+                onClick={() => {
+                  router("/me/reset-password");
+                  _setIsOpen(false);
+                }}
+              >
                 <ResetPasswordIcon />
                 Reset password
               </button>

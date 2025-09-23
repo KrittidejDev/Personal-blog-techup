@@ -29,7 +29,7 @@ const Login = () => {
   };
 
   return (
-    <NavAndFooter>
+    <NavAndFooter isAuth>
       {_isBgLoading ? (
         <BgLoading />
       ) : (

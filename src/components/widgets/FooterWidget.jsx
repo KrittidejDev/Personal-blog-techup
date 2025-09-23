@@ -21,7 +21,7 @@ const FooterWidget = () => {
             </a>
           </div>
         </div>
-        <div className="flex-1 flex sm:justify-end justify-center whitespace-nowrap ">
+        <div className="flex-1 flex sm:justify-end justify-center whitespace-nowrap min-w-40 underline hover:text-brown-16b">
           <a href="/">Home page</a>
         </div>
       </div>

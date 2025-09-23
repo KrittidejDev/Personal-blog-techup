@@ -13,6 +13,9 @@ import AdminNotification from "@/pages/Admin/AdminNotification/AdminNotification
 import AdminResetPassword from "@/pages/Admin/AdminResetPassword/AdminResetPassword";
 import AdminCategoryDetail from "@/pages/Admin/AdminCategory/AdminCategoryDetail";
 import AdminArticleDetail from "@/pages/Admin/AdminArticle/AdminArticleDetail";
+import ProfileSetting from "@/pages/User/Profile/ProfileSetting";
+import PrivateRoute from "@/lib/routes/PrivateRoute";
+import ResetPassword from "@/pages/User/Profile/ResetPassword";
 
 export default function AppRoutes() {
   return useRoutes([
@@ -21,6 +24,15 @@ export default function AppRoutes() {
     { path: "/register", element: <Register /> },
     { path: "/article", element: <Article /> },
     { path: "/article/:id", element: <ArticleDetail /> },
+
+    //profile
+    {
+      element: <PrivateRoute />,
+      children: [
+        { path: "/me/profile", element: <ProfileSetting /> },
+        { path: "/me/reset-password", element: <ResetPassword /> },
+      ],
+    },
 
     // admin
     {

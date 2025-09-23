@@ -72,17 +72,23 @@ const ArticleDetail = () => {
 
   const _handleLikes = async () => {
     try {
-      const myLike = _data.likes.find((like) => like.user._id === userId);
-      let res;
-      if (myLike) {
-        res = await userService.DELETE_UNLIKE(id);
-        if (res.status === 200) {
-          toast.info("You unliked this blog");
-        }
+      if (!userId) {
+        _setIsShowModal(true);
       } else {
-        res = await userService.POST_LIKE(id);
-        if (res.status === 200) {
-          toast.success("You liked this blog");
+        const myLike = _data.likes.find((like) => like.user._id === userId);
+        let res;
+        if (myLike) {
+          res = await userService.DELETE_UNLIKE(id);
+          if (res.status === 200) {
+            toast.info("You unliked this blog");
+          } else {
+            _setIsShowModal(true);
+          }
+        } else {
+          res = await userService.POST_LIKE(id);
+          if (res.status === 200) {
+            toast.success("You liked this blog");
+          }
         }
       }
     } catch (error) {
@@ -171,12 +177,12 @@ const ArticleDetail = () => {
         onClose={_handleCloseModal}
         isCloseBtn
       >
-        <div className="flex flex-col items-center">
-          <div className="w-lg p-5 text-h2 text-brown-31e! text-center mb-10">
+        <div className="flex flex-col gap-y-4 md:gap-y-10 items-center ">
+          <div className="max-w-lg p-5 text-h3 md:text-[40px]! text-brown-31e! text-center ">
             Create an account to continue
           </div>
           <Button
-            className={"mb-10 btn-31e"}
+            className={"btn-31e"}
             onClick={() => {
               router("/register");
             }}

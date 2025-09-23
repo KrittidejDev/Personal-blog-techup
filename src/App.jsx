@@ -8,7 +8,7 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <AppRoutes />
-        <ToastContainer />
+        <ToastContainer position="bottom-right" />
       </AuthProvider>
     </BrowserRouter>
   );

@@ -34,6 +34,7 @@ const Register = () => {
         _setIsBgLoading(false);
       }
     } catch (error) {
+      console.error(error);
       _setIsBgLoading(false);
       toast.error("ลงทะเบียนไม่สำเร็จ");
     }
@@ -45,7 +46,7 @@ const Register = () => {
   };
 
   return (
-    <NavAndFooter>
+    <NavAndFooter isAuth>
       {_isBgLoading ? (
         <BgLoading />
       ) : (
