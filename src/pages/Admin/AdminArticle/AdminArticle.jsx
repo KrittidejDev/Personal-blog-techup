@@ -13,6 +13,7 @@ import { Pagination } from "@/components/Tables/TablePagination";
 import { TableStandard } from "@/components/Tables/TablesStandard";
 import { Button } from "@/components/ui/button";
 import AdminNavbarWidget from "@/components/widgets/AdminNavbarWidget";
+import { useAuth } from "@/context/AuthContext";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -21,6 +22,7 @@ import { toast } from "react-toastify";
 
 const AdminArticle = () => {
   const router = useNavigate();
+  const { logout } = useAuth();
   const [_isBgLoading, _setIsBgLoading] = useState(true);
   const [_data, _setData] = useState([]);
   const [_paginationData, _setPaginationData] = useState({});
@@ -91,6 +93,8 @@ const AdminArticle = () => {
       if (res.status === 200) {
         toast.success("Article deleted successfully");
         _fetchArticle();
+      } else if (res.status === 401) {
+        logout();
       }
     } catch (error) {
       console.error(error);

@@ -16,7 +16,6 @@ export const NotiDisplay = ({ className }) => {
   const _fetchNotification = async () => {
     try {
       const res = await userService.GET_NOTIFICATION(`?read=false`);
-      console.log("res noti", res);
       if (res.status === 200) {
         _setNotiData(res.data);
       }
@@ -72,7 +71,7 @@ export const NotiDisplay = ({ className }) => {
       {/* 📌 Dropdown */}
       {_isOpen && (
         <div
-          className="absolute flex flex-col w-[362px] bg-white top-16 right-0 rounded-lg shadow-lg overflow-hidden z-40 py-6 px-4 gap-y-4"
+          className="absolute flex flex-col w-[362px] bg-white top-16 -right-2.5 md:right-0  rounded-lg shadow-lg overflow-hidden z-40 py-6 px-4 gap-y-4"
           onMouseLeave={() => {
             timeoutRef.current = setTimeout(() => _setIsOpen(false), 1000);
           }}

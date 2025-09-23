@@ -1,10 +1,11 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { Outlet } from "react-router-dom";
 import { BgLoading } from "@/components/Displays/BgLoading";
+import ModalEmpty from "@/components/Displays/ModalEmpty";
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = () => {
   const { user, loading } = useAuth();
-
   if (loading)
     return (
       <ModalEmpty isShowModal={true}>
@@ -13,7 +14,7 @@ const PrivateRoute = ({ children }) => {
     );
   if (!user) return <Navigate to="/login" replace />;
 
-  return children;
+  return <Outlet />;
 };
 
 export default PrivateRoute;

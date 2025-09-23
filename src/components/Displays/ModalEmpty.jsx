@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 const ModalEmpty = ({ children, isShowModal, onClose, isCloseBtn }) => {
   return (
     <div
-      className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 ${
+      className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 ${
         !isShowModal && "hidden"
       }`}
       onClick={onClose}

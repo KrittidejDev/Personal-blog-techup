@@ -1,5 +1,6 @@
 import moment from "moment";
 import { AvatarDisplay } from "../Displays/Avatar";
+import BlankAvatar from "../Icons/BlankAvatar";
 
 export const BlogCard = ({ data }) => {
   return (
@@ -20,15 +21,16 @@ export const BlogCard = ({ data }) => {
       </p>
       <div className="flex items-center gap-x-4 text-brown-6d1 ">
         <div className="flex items-center gap-x-2 ">
-          <img
-            src={
-              data.author
-                ? data?.author?.avatar.url
-                : "/images/header-img-1.png"
-            }
-            alt={"avatar"}
-            className="size-11 rounded-full"
-          />
+          {data?.author?.avatar?.url ? (
+            <img
+              src={data?.author?.avatar?.url}
+              alt="avatar"
+              className="w-11 h-11 object-cover object-center rounded-full overflow-hidden"
+            />
+          ) : (
+            <BlankAvatar width="44" height="44" />
+          )}
+
           <div className="text-b2 text-brown-03b! font-medium!">
             {data?.author?.name}
           </div>
